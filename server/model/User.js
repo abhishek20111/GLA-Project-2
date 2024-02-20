@@ -9,6 +9,7 @@ const sample = new mongoose.Schema({
         unique: true
     },
     password: String,
+    profileImage:String,
     role:{type: String, default:"USER"},
     courceId:[String],
     verified:{

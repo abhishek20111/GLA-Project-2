@@ -5,6 +5,7 @@ const User = mongoose.model('USER')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const sendEmail  = require('../mailer/mail')
+const middleware = require('../middleware/middleware')
 
 
 
@@ -51,8 +52,8 @@ router.post("/loginUser", async (req, res) => {
         return res.json({ error: "User Not found" });
     }
     if (await bcrypt.compare(password, user.password)) {
-        console.log(user);
-        const token = jwt.sign({ email: user.email, role: user.role, name: user.name, verified: user.verified }, process.env.JWT_SECRET);
+        // console.log(user);
+        const token = jwt.sign({ email: user.email, role: user.role, name: user.name, verified: user.verified, profileImage:user.profileImage }, process.env.JWT_SECRET);
 
         if (res.status(201)) {
             return res.json({ message: "Login Successfully", token: token, user: user });
@@ -62,6 +63,31 @@ router.post("/loginUser", async (req, res) => {
     }
     res.json({ status: "error", error: "Invalid Authentication" });
 });
+
+router.put('/updateProfileImage', middleware, async (req, res) => {
+    const userId = req.user._id;
+    const { imageUrl } = req.body;
+  console.log("updateProfileImage"+imageUrl);
+    try {
+      // Find the user by userId
+      const user = await User.findById(userId);
+  
+      if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+      }
+  
+      // Update the profile image URL
+      user.profileImage = imageUrl;
+
+      // Save the updated user
+      await user.save();
+  
+      return res.status(200).json({ message: 'Profile image updated successfully', user });
+    } catch (error) {
+      console.error('Error updating profile image:', error);
+      return res.status(500).json({ error: 'Internal server error' });
+    }
+  });
 
 router.get('/verifyEmail/:token', async (req, res) => {
     try {
@@ -100,7 +126,7 @@ router.post('/forgot-password', async (req, res) => {
             return res.status(404).json({ error: "User not found" });
         }
         console.log("forgot"+email);
-        console.log(user);
+        
         
         await sendEmail({ email, emailType: "FORGOT_PASSWORD", userId: user._id });
         return res.json({ message: "Email Sent for Password Reset" });

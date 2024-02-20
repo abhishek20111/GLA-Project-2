@@ -98,54 +98,7 @@ router.post('/addCourse', middleware, async (req, res) => {
 });
 
 
-router.post("/register", async (req, res) => {
-    console.log("register");
-    const { name, email, password, CurrentUserType } = req.body;
-    if (!name || !email || !password || !CurrentUserType) {
-        return res.send({ error: "Fill Complete details" })
-    }
-    // console.log(name + " " + email + " " + password + " " + CurrentUserType);
 
-    const encryptedPassword = await bcrypt.hash(password, 10);
-    try {
-        const oldUser = await User.findOne({ email });
-
-        if (oldUser) {
-            return res.json({ error: "User Exists" });
-        }
-        const response = await User.create({
-            name,
-            email,
-            password: encryptedPassword,
-            role: CurrentUserType,
-        });
-        return res.json({ success: "User Registered Successfully" });
-        // res.send({ status: "Data Save Succesfully" });
-    } catch (error) {
-        res.status(400).send({ message: error });
-    }
-});
-
-router.post("/loginUser", async (req, res) => {
-    console.log("loginUser");
-    const { email, password } = req.body;
-
-    const user = await User.findOne({ email });
-    if (!user) {
-        return res.json({ error: "User Not found" });
-    }
-    if (await bcrypt.compare(password, user.password)) {
-        console.log(user);
-        const token = jwt.sign({ email: user.email, role: user.role, name: user.name }, process.env.JWT_SECRET);
-
-        if (res.status(201)) {
-            return res.json({ message: "Login Successfully", token: token, user: user });
-        } else {
-            return res.json({ error: "error" });
-        }
-    }
-    res.json({ status: "error", error: "Invalid Authentication" });
-});
 
 
 router.post('/uploadVideo', middleware, async (req, res) => {

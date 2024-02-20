@@ -14,7 +14,7 @@ dotenv.config()
 const app = express();//to create an instance of the Express application object.
 
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.use(bodyParser.json()); 
 
 const port = process.env.PORT || 8080; 
  
