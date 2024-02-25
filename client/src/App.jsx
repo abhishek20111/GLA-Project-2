@@ -49,7 +49,7 @@ function App() {
   }, [dispatch]);
   const LoadingSpinner = () => (
     <di45v style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
-      <img src={Loading} alt="Loading..." />
+      <img src={Loading} alt="Loading..." className="h-[20vh]" />
     </di45v>
   );
 
