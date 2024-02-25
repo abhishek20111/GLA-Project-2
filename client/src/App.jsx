@@ -58,13 +58,20 @@ function App() {
       <Helmet>
         <title>LearnUp</title>
         <meta name="description" content="LearnUp is platform for Courses" />
-        <meta name="keywords" content="LearnUp, LearnUp, Education, Learning platform, course, buy courses, courses" />
+        <meta
+          name="keywords"
+          content="LearnUp, LearnUp, Education, Learning platform, course, buy courses, courses"
+        />
       </Helmet>
-      <Navbar />
-      <Suspense fallback={<LoadingSpinner />}>
+      <div className="sticky top-0 z-10">
+        <Navbar />
+      </div>
+      <div className="">
+        <Suspense fallback={<LoadingSpinner />}>
         <AppRoutes />
-      </Suspense>
+        </Suspense>
       <Footer />
+      </div>
       <ToastContainer />
     </div>
   );

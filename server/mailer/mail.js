@@ -1,20 +1,20 @@
-const nodemailer = require('nodemailer');
-const jwt = require('jsonwebtoken');
+const nodemailer = require("nodemailer");
+const jwt = require("jsonwebtoken");
 
 const sendEmail = async ({ email, emailType, userId }) => {
   try {
     const hashedToken = jwt.sign(
       { userId: userId },
       process.env.JWT_SECRET_FOR_RESET,
-      { expiresIn: '1h' }
+      { expiresIn: "1h" }
     );
     const transport = nodemailer.createTransport({
       host: process.env.SMTP_HOST,
       port: process.env.SMTP_PORT,
-      secure: false, 
+      secure: false,
       auth: {
-        user: process.env.SMTP_MAIL, 
-        pass: process.env.SMTP_PASSWORD, 
+        user: process.env.SMTP_MAIL,
+        pass: process.env.SMTP_PASSWORD,
       },
     });
 
@@ -59,11 +59,19 @@ const sendEmail = async ({ email, emailType, userId }) => {
       </style>
     </head>
     <body>
-    <div class="container">
-    <div class="content">
-      <h1>Click <a class="link" href="${process.env.DOMAIN}/${emailType === "VERIFY" ? "VerifyEmail" : "reset-password"}?token=${hashedToken}">here</a> to ${emailType === "VERIFY" ? "verify your email" : "reset your password"}</h1>
+    <div className="container">
+    <div className="content">
+      <h1>Click <a className="link" href="${process.env.DOMAIN}/${
+      emailType === "VERIFY" ? "VerifyEmail" : "reset-password"
+    }?token=${hashedToken}">here</a> to ${
+      emailType === "VERIFY" ? "verify your email" : "reset your password"
+    }</h1>
       <p>Or copy and paste the link below in your browser:</p>
-      <p class="midd"><a class="link" href="${process.env.DOMAIN}/${emailType === "VERIFY" ? "VerifyEmail" : "reset-password"}?token=${hashedToken}">${process.env.DOMAIN}/${emailType === "VERIFY" ? "VerifyEmail" : "reset-password"}?token=${hashedToken}</a></p>
+      <p className="midd"><a className="link" href="${process.env.DOMAIN}/${
+      emailType === "VERIFY" ? "VerifyEmail" : "reset-password"
+    }?token=${hashedToken}">${process.env.DOMAIN}/${
+      emailType === "VERIFY" ? "VerifyEmail" : "reset-password"
+    }?token=${hashedToken}</a></p>
     </div>
   </div>  
     </body>
@@ -87,4 +95,3 @@ const sendEmail = async ({ email, emailType, userId }) => {
 };
 
 module.exports = sendEmail;
-

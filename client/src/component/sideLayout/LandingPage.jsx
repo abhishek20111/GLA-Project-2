@@ -62,10 +62,10 @@ export default function LandingPage() {
   ];
 
   return (
-    <section className="h-[800px] sm:h-full min-h-screen md:flex-none md:flex-col md:justify-center">
+    <section className="h-[800px] bg-cyan-950 sm:h-full min-h-screen md:flex-none md:flex-col md:justify-center">
       <Fade>
         <div
-          className={`max-w-screen-xl mx-auto px-4 pt-12 md:pt-28 gap-12  text-gray-600 md:px-8 xl:flex `}
+          className={`max-w-screen-xl mx-auto px-4 pt-12 md:pt-28 gap-12  text-white md:px-8 xl:flex `}
           
         >
           <div className="space-y-5 max-w-2xl mx-auto text-center xl:text-left">
@@ -73,14 +73,14 @@ export default function LandingPage() {
               {features.map((item, idx) => (
                 <div
                   key={idx}
-                  className="flex items-center gap-x-2 text-gray-500 text-sm"
+                  className="flex items-center gap-x-2 text-cyan-200 text-sm"
                 >
                   {item.icon}
                   {item.name}
                 </div>
               ))}
             </div>
-            <h1 className="text-4xl text-gray-800 font-extrabold mx-auto md:text-5xl">
+            <h1 className="text-4xl text-white font-extrabold mx-auto md:text-5xl">
               Explore in-demand careers and develop cutting edge skills
             </h1>
             <p className="max-w-xl mx-auto xl:mx-0">
@@ -89,7 +89,7 @@ export default function LandingPage() {
             </p>
             <div className="items-center justify-center gap-x-3 md:space-y-3 sm:flex sm:space-y-0 xl:justify-start">
               <Link to="/courses">
-                <a className="flex items-center justify-center gap-x-2 py-2 px-4 text-white font-medium bg-gray-800 duration-150 hover:bg-gray-700 active:bg-gray-900 rounded-lg md:inline-flex">
+                <a className="flex items-center justify-center gap-x-2 py-2 px-4 text-cyan-950 font-medium bg-yellow-300 duration-150 mt-[12px] hover:bg-amber-500 active:bg-gray-900 rounded-lg md:inline-flex">
                   Browse courses
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -108,10 +108,10 @@ export default function LandingPage() {
               {isLogin ? (
                 <Link to="/UserProfile">
                   <a
-                    href="javascript:void(0)"
-                    className="flex items-center justify-center gap-x-2 py-2 px-4 text-gray-700 hover:text-gray-500 font-medium duration-150 active:bg-gray-100 border rounded-lg md:inline-flex"
+                    href=""
+                    className="flex items-center justify-center gap-x-2 py-2 px-4 text-cyan-200 hover:text-white font-medium duration-150 active:bg-gray-100 border border-cyan-200 rounded-lg md:inline-flex"
                   >
-                    Profile
+                    Dashboard
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 20 20"
@@ -129,8 +129,8 @@ export default function LandingPage() {
               ) : (
                 <Link to="/signin">
                   <a
-                    href="javascript:void(0)"
-                    className="flex items-center justify-center gap-x-2 py-2 px-4 text-gray-700 hover:text-gray-500 font-medium duration-150 active:bg-gray-100 border rounded-lg md:inline-flex"
+                    href=""
+                    className="flex items-center justify-center gap-x-2 py-2 px-4 text-yellow-700 hover:text-gray-500 font-medium duration-150 active:bg-gray-100 border rounded-lg md:inline-flex"
                   >
                     Login
                     <svg
