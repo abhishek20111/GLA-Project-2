@@ -23,6 +23,3 @@ export const uploadToCloudinary = async (file) => {
   }
 };
 
-// of mongo db
-// email - tech.fusio@gmail.com
-// pass - 

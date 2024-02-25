@@ -35,6 +35,7 @@ export default function MyCource() {
   const handleSelectCourse = (syllabus, url) => {
     navigate('/VWindow', { state: { selectedSyllabus: syllabus, selectedVideoUrl: url } });
   };
+  console.log(filteredCourse);
 
   const searchCourses = (keyword) => {
     if (keyword.length == 0) {
@@ -107,7 +108,18 @@ export default function MyCource() {
         </div>
       </div>
       {/* <div className="bg-gray-200 md:w-3/4 rounded-md flex flex-wrap justify-center bg-gradient-to-tr from-indigo-300  to-indigo-700 min-h-screen"> */}
-      <div className="md:w-[95%] md:mx-auto rounded-md grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-0">
+      {filteredCourse.length === 0 ? (
+        <>
+        <div className="h-[100dvh] w-[100vw] flex">
+          <h1 className="m-auto font-semibold text-xl mt-[15%]">
+            Select the couce first
+            <br />
+            No cource selected
+          </h1>
+        </div>
+        </>
+      ):
+        (<div className="md:w-[95%] md:mx-auto rounded-md grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-0">
         <Zoom cascade damping={0.5} triggerOnce={true}>
         {filteredCourse.map((course, indx) => (
             <div className="m-2 group" key={indx}>
@@ -147,6 +159,7 @@ export default function MyCource() {
         ))}
         </Zoom>
       </div>
+      )}
     </div>
   );
 }

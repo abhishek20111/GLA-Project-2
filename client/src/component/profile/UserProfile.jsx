@@ -1,23 +1,28 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { uploadToCloudinary } from "../helper/upload";
+import { updateprofileImage } from "../../store/UserSilce";
 
 const Profile = () => {
   const [userInfo, setUserInfo] = useState([]);
   const [courses, setCourses] = useState([]);
   const [mycourses, setMyCourses] = useState([]);
+  const [imageChange, setImageChange] = useState(null);
+  const [imageUrl, setImageUrl] = useState('');
+  const userId = useSelector((state) => state.userData.token);
+  const dispacter = useDispatch();
+  const profileImage = useSelector((state) => state.userData.profileImage);
 
   const detail = useSelector((state) => state.userData);
   useEffect(() => setUserInfo(detail), []);
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  
 
   const fetchData = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get("http://localhost:8080/getMyCourses", {
+      const response = await axios.get("http://localhost:8080/cource/getMyCourses", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -30,7 +35,7 @@ const Profile = () => {
   const fetchMyData = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get("http://localhost:8080/getCourses", {
+      const response = await axios.get("http://localhost:8080/cource/getCourses", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -41,11 +46,48 @@ const Profile = () => {
       console.error("Error fetching courses:", error);
     }
   };
+  const handleImageChange = (e) => {
+    setImageChange(e.target.files[0]);
+  };
+
+  const uploadImage = async () => {
+    try {
+      const { url } = await uploadToCloudinary(imageChange);
+      console.log(url);
+      setImageUrl(url)
+      dispacter(updateprofileImage(url));
+      changeProfileImage();
+      return url; 
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      return null;
+    }
+  };
+  const changeProfileImage = async () => {
+    try {
+      console.log(imageUrl);
+      const token = localStorage.getItem("token");
+      const response = await axios.put(`http://localhost:8080/updateProfileImage`, {imageUrl},{
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log(response.data);
+      setImageChange('');
+    }catch(err){
+      console.log(err);
+    }
+  }
+
 
   useEffect(() => {
     fetchMyData();
+    fetchData();
+    if (imageChange !== null) {
+      uploadImage();
+    }
     console.log(mycourses);
-  }, []);
+  }, [imageChange]);
 
   return (
     <div className="bg-blue-100">
@@ -53,25 +95,36 @@ const Profile = () => {
         <div className="border rounded-md bg-white md:p-6 p-3 md:mb-6 mb-3 h-full">
           <h2 className="text-lg font-bold mb-4">Profile</h2>
           <div className="border rounded-md p-4 mb-4">
-            <div className="flex justify-center">
-              <div className="md:w-1/2 border-2 rounded-xl">
+            <label htmlFor="dropzone-file" className="flex justify-center">
+              <div className="md:w-1/2  border-2 rounded-xl">
                 <img
-                  src={`https://www.seekpng.com/png/detail/41-410093_circled-user-icon-user-profile-icon-png.png`}
+                  src={`${profileImage ? profileImage : "https://www.seekpng.com/png/detail/41-410093_circled-user-icon-user-profile-icon-png.png"}`}
                   alt="User Profile"
-                  className=" object-cover rounded-full"
+                  className=" object-cover rounded-full h-[20rem] w-[20rem]"
                 />
+                <input
+                    id="dropzone-file"
+                    onChange={handleImageChange}
+                    type="file"
+                    className="hidden"
+                  />
               </div>
-            </div>
+            </label>
             <div className="p-4 flex flex-col items-center">
               <p>
-                <span className="font-bold">Username: </span>{" "}
-                {userInfo.username}
+                {userInfo.role === "Super Admin" && <span className="font-semibold text-red-500">Category: {" "}Master</span>}
               </p>
               <p>
-                <span className="font-bold"></span> {userInfo.email}
+                {userInfo.role === "Admin" && <span className="font-semibold text-red-500">Category: {" "}Teacher</span>}
+              </p>
+              <p>
+                {userInfo.role === "User" && <span className="font-semibold text-red-500">Category: {" "}Student</span>}
               </p>
               <p>
                 <span className="font-bold">Name: </span> {userInfo.name}
+              </p>
+              <p>
+                <span className="font-bold">Email: </span> {userInfo.email}
               </p>
             </div>
           </div>

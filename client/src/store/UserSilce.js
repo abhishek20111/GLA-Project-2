@@ -6,6 +6,7 @@ const initialState = {
   role: '',
   email: '',
   verified:false,
+  profileImage:'',
   token: localStorage.getItem('token') || '',
   details: [],
   loading: false,
@@ -19,14 +20,16 @@ const extractUserInfoFromToken = (token) => {
       name: decodedToken.name,
       role: decodedToken.role,
       email: decodedToken.email,
-      verified: decodedToken.verified
+      verified: decodedToken.verified,
+      profileImage:decodedToken.profileImage
     };
   } catch (error) {
     return {
       name: '',
       role: '',
       email: '',
-      verified:false
+      verified:false,
+      profileImage:''
     };
   }
 };
@@ -47,14 +50,18 @@ export const userSlice = createSlice({
     updateverified: (state, action) => {
       state.verified = action.payload;
     },
+    updateprofileImage: (state, action) => {
+      state.profileImage = action.payload;
+    },
     updateToken: (state, action) => {
       state.token = action.payload;
-      const { name, role, email, verified } = extractUserInfoFromToken(action.payload);
+      const { name, role, email, verified, profileImage } = extractUserInfoFromToken(action.payload);
       state.name = name;
       state.role = role;
       state.email = email;
       state.isLogin = true;
       state.verified = verified;
+      state.profileImage = profileImage;
     },
     addDetail: (state, action) => {
       state.details.push(action.payload);
@@ -80,6 +87,7 @@ export const {
   updateRole,
   updateToken,
   addDetail,
+  updateprofileImage,
   updateverified,
   removeDetail,
   setIsLogin,
