@@ -29,7 +29,7 @@ function Navbar() {
   const CURRENT_USER_TYPE = useSelector((state) => state.userData.role);
   // console.log(CURRENT_USER_TYPE);
   return (
-    <nav className="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-900">
+    <nav className="bg-cyan-950 from-cyan-950 via-cyan-950 px-2 sm:px-4 py-2.5 rounded">
       <div className="container flex flex-wrap items-center justify-between mx-auto">
         <a link to="/" className="flex items-center">
           <img
@@ -39,7 +39,7 @@ function Navbar() {
           />
         </a>
 
-        <div className="flex items-center md:order-2">
+        <div className="flex items-center md:order-2 ">
           <button
             type="button"
             className="flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
@@ -73,7 +73,7 @@ function Navbar() {
                   <li>
                     <Link
                       to="/UserProfile"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                      className="block px-4 py-2 text-sm text-white hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
                     >
                       Dashboard
                     </Link>
@@ -81,7 +81,7 @@ function Navbar() {
                   {/* <li>
                     <a
                       href="#"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                      className="block px-4 py-2 text-sm text-white hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
                     >
                       Settings
                     </a>
@@ -89,7 +89,7 @@ function Navbar() {
                   <li>
                     <a
                       href="#"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                      className="block px-4 py-2 text-sm text-white hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
                     >
                       Earnings
                     </a>
@@ -99,7 +99,7 @@ function Navbar() {
                         onClick={() => {
                           navigate("/logout");
                         }}
-                        className="block cursor-pointer px-4 py-2 text-sm  hover:rounded hover:bg-blue-500 hover:text-lg transition-all hover:text-white text-gray-700  dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                        className="block cursor-pointer px-4 py-2 text-sm  hover:rounded hover:bg-blue-500 hover:text-lg transition-all hover:text-white text-white  dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
                       >
                         Sign out
                       </div>
@@ -146,16 +146,16 @@ function Navbar() {
         </div>
 
         <div
-          className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
+          className="items-center bg-transparent justify-between hidden w-full md:flex md:w-auto md:order-1"
           id="mobile-menu-2"
         >
-          <ul className="flex flex-col p-4 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+          <ul className="flex flex-col p-4 mt-4 rounded-lg  md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border- ">
             <li>
               <a
                 href="#"
                 className={`block py-2 pl-3 pr-4  rounded md:bg-transparent ${
-                  location.pathname === "/" ? "text-blue-700" : "text-gray-700"
-                } md:p-0 dark:text-white hover:text-blue-700`}
+                  location.pathname === "/" ? "text-yellow-300" : "text-white"
+                } md:p-0  hover:text-red-300`}
                 aria-current="page"
               >
                 <Link to="/">Home</Link>
@@ -165,8 +165,8 @@ function Navbar() {
               <a
                 href="#"
                 className={`block py-2 pl-3 pr-4  rounded md:bg-transparent ${
-                  location.pathname === "/courses" ? "text-blue-700" : "text-gray-700"
-                } md:p-0 dark:text-white hover:text-blue-700`}
+                  location.pathname === "/courses" ? "text-yellow-300" : "text-white"
+                } md:p-0 dark:text-white hover:text-yellow-300`}
               >
                 <Link to="/courses">Courses</Link>
               </a>
@@ -176,8 +176,8 @@ function Navbar() {
                 <Link
                   to="/myCourse"
                   className={`block py-2 pl-3 pr-4  rounded md:bg-transparent ${
-                    location.pathname === "/myCourse" ? "text-blue-700" : "text-gray-700"
-                  } md:p-0 dark:text-white hover:text-blue-700`}
+                    location.pathname === "/myCourse" ? "text-yellow-300" : "text-white"
+                  } md:p-0 dark:text-white hover:text-yellow-300`}
                 >
                   My Courses
                 </Link>
@@ -189,8 +189,8 @@ function Navbar() {
                 <Link
                   to="/manage"
                   className={`block py-2 pl-3 pr-4  rounded md:bg-transparent ${
-                    location.pathname === "/manage" ? "text-blue-700" : "text-gray-700"
-                  } md:p-0 dark:text-white hover:text-blue-700`}
+                    location.pathname === "/manage" ? "text-yellow-300" : "text-white"
+                  } md:p-0 dark:text-white hover:text-yellow-300`}
                 >
                   Manage
                 </Link>
@@ -200,8 +200,8 @@ function Navbar() {
                 <Link
                   to="/intern"
                   className={`block py-2 pl-3 pr-4  rounded md:bg-transparent ${
-                    location.pathname === "/intern" ? "text-blue-700" : "text-gray-700"
-                  } md:p-0 dark:text-white hover:text-blue-700`}
+                    location.pathname === "/intern" ? "text-yellow-300" : "text-white"
+                  } md:p-0 dark:text-white hover:text-yellow-300`}
                 >
                   Internships
                 </Link>
@@ -211,8 +211,8 @@ function Navbar() {
               <Link
                 to="/about"
                 className={`block py-2 pl-3 pr-4  rounded md:bg-transparent ${
-                  location.pathname === "/about" ? "text-blue-700" : "text-gray-700"
-                } md:p-0 dark:text-white hover:text-blue-700`}
+                  location.pathname === "/about" ? "text-yellow-300" : "text-white"
+                } md:p-0 dark:text-white hover:text-yellow-300`}
               >
                 About Us
               </Link>

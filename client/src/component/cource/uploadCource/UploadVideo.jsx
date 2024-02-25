@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import GIF from "../../../assets/loading.gif";
-import '../../../App.css';
+import "../../../App.css";
 
 const UploadVideo = () => {
   const email = useSelector((state) => state.userData.email);
@@ -129,7 +129,7 @@ const UploadVideo = () => {
       setIsSubmit(false);
       setUploaded(false);
       notify1(response.data.message);
-      navigate('/yourVideo')
+      navigate("/yourVideo");
     } catch (error) {
       setIsSubmit(false);
       console.error("Failed to send data:", error);
@@ -223,45 +223,45 @@ const UploadVideo = () => {
               className="outline-double outline-offset-8"
               onChange={handleVideoSelect}
             /> */}
-            <div class="w-full flex">
-              {selectedVideos.length == 0 &&
-                <div class=" p-4 bg-white m-auto rounded-lg w-full">
-                <div class=" p-5 relative border-4 border-dotted border-gray-300 rounded-lg w-full">
-                  <svg
-                    class="text-indigo-500 w-24 mx-auto mb-4"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      trokeLinejoin="round"
-                      stroke-width="2"
-                      d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-                    />
-                  </svg>
-                  <div class="input_field flex flex-col w-max mx-auto text-center">
-                    <label>
-                      <input
-                        class="text-sm cursor-pointer w-36 hidden"
-                        type="file"
-                        accept="video/*"
-                        multiple
-                        onChange={handleVideoSelect}
+            <div className="w-full flex">
+              {selectedVideos.length == 0 && (
+                <div className=" p-4 bg-white m-auto rounded-lg w-full">
+                  <div className=" p-5 relative border-4 border-dotted border-gray-300 rounded-lg w-full">
+                    <svg
+                      className="text-indigo-500 w-24 mx-auto mb-4"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
                       />
-                      <div class="text bg-indigo-600 text-white border border-gray-300 rounded font-semibold cursor-pointer p-1 px-3 hover:bg-indigo-500">
-                        Select
-                      </div>
-                    </label>
+                    </svg>
+                    <div className="input_field flex flex-col w-max mx-auto text-center">
+                      <label>
+                        <input
+                          className="text-sm cursor-pointer w-36 hidden"
+                          type="file"
+                          accept="video/*"
+                          multiple
+                          onChange={handleVideoSelect}
+                        />
+                        <div className="text bg-indigo-600 text-white border border-gray-300 rounded font-semibold cursor-pointer p-1 px-3 hover:bg-indigo-500">
+                          Select
+                        </div>
+                      </label>
 
-                    <div class="title text-indigo-500 uppercase">
-                      or drop files here
+                      <div className="title text-indigo-500 uppercase">
+                        or drop files here
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              }
+              )}
             </div>
           </div>
           <div className="w-full md:mx-5">

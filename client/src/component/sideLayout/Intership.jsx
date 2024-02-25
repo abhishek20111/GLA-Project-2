@@ -84,14 +84,14 @@ const Internship = () => {
       content:
         "Master the fundamentals of C programming and algorithms to build efficient and scalable software applications.",
       src: "https://res.cloudinary.com/practicaldev/image/fetch/s--xVCufn18--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_66%2Cw_880/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/5nnkrcc3kixypm642opg.gif",
-      link: "https://forms.gle/NjXY7Ersf4Rki5jZA"
+      link: "https://forms.gle/NjXY7Ersf4Rki5jZA",
     },
     {
       title: "Python Programming",
       content:
         "Explore the versatility of Python and its applications in data analysis, automation, and web development.",
-      src:"https://media.giphy.com/media/coxQHKASG60HrHtvkt/giphy.gif",
-      link: "https://forms.gle/NjXY7Ersf4Rki5jZA"
+      src: "https://media.giphy.com/media/coxQHKASG60HrHtvkt/giphy.gif",
+      link: "https://forms.gle/NjXY7Ersf4Rki5jZA",
     },
     {
       title: "Python (Development)",
@@ -135,12 +135,15 @@ const Internship = () => {
       <Helmet>
         <title>LearnUp | Intership Page</title>
         <meta name="description" content="LearnUp Intership Page" />
-        <meta name="keywords" content="LearnUp, intership, LearnUp, Home, Study, Contest, Education, Learning platform, course, buy courses, courses" />
+        <meta
+          name="keywords"
+          content="LearnUp, intership, LearnUp, Home, Study, Contest, Education, Learning platform, course, buy courses, courses"
+        />
       </Helmet>
       <div className="flex justify-center my-5 w-full">
         <div className="flex flex-wrap min-h-screen m-2">
           <Zoom cascade damping={0.1} triggerOnce={true}>
-          {sections.map((section, index) => (
+            {sections.map((section, index) => (
               <div
                 key={index}
                 className="flex justify-center max-w-[400px] m-12"
@@ -150,7 +153,7 @@ const Internship = () => {
                 >
                   <img
                     alt="Placeholder"
-                    class="block h-[300px] object-cover overflow-clipped rounded-md"
+                    className="block h-[300px] object-cover overflow-clipped rounded-md"
                     src={section.src}
                   ></img>
                   <h2 className="text-2xl mx-4 font-bold mt-4">
@@ -158,23 +161,28 @@ const Internship = () => {
                   </h2>
                   <p className="text-gray-600 mx-4 py-2">{section.content}</p>
                   <div className="flex justify-center mt-4">
-                    {isLogin? <a
-                      href={section.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <button  className="rounded-full py-2 px-2 text-blue-700 font-semibold border-blue-700 transition-all duration-500 border-2 text-lg bg-white hover:bg-blue-700 hover:text-white w-[150px]">
-                        Apply Now
-                      </button>
-                    </a>:
-                    <Link to={'/signin'} className="flex justify-center rounded-full py-2 px-2 text-blue-700 font-semibold border-blue-700 transition-all duration-500 border-2 text-lg bg-white hover:bg-blue-700 hover:text-white w-[150px]">
-                    <p>Sign In</p> 
-                  </Link>
-                  }
+                    {isLogin ? (
+                      <a
+                        href={section.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <button className="rounded-full py-2 px-2 text-blue-700 font-semibold border-blue-700 transition-all duration-500 border-2 text-lg bg-white hover:bg-blue-700 hover:text-white w-[150px]">
+                          Apply Now
+                        </button>
+                      </a>
+                    ) : (
+                      <Link
+                        to={"/signin"}
+                        className="flex justify-center rounded-full py-2 px-2 text-blue-700 font-semibold border-blue-700 transition-all duration-500 border-2 text-lg bg-white hover:bg-blue-700 hover:text-white w-[150px]"
+                      >
+                        <p>Sign In</p>
+                      </Link>
+                    )}
                   </div>
                 </div>
               </div>
-          ))}
+            ))}
           </Zoom>
         </div>
       </div>

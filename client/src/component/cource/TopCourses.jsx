@@ -3,12 +3,12 @@ import { Fade } from "react-awesome-reveal";
 function TopCourses() {
   const topCourse = ["c1", "c2", "c3", "c4", "c5", "c6"];
   return (
-    <div className="flex flex-col py-20 md:mx-auto p-auto bg-gradient-to-b from-blue-700 to-white ">
+    <div className="flex flex-col py-20 md:mx-auto p-auto bg-cyan-950 ">
       <Fade>
-        <h1 className="flex py-5 lg:px-20 md:px-10 px-5 lg:mx-40 md:mx-20 mx-5 font-bold text-2xl md:text-4xl text-white">
-          Popular Courses
+        <h1 className="flex py-5 md:px-0 px-5 lg:mx-40 md:mx-20 mx-5 font-bold text-2xl md:text-4xl text-white">
+          Recent Favourites...
         </h1>
-        <div className="md:border-8 border-2 border-gray-300 rounded-3xl  flex overflow-x-scroll md:mx-auto mx-3 md:w-3/4  p-10 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']">
+        <div className="md:border-t-2 border-white border-r-2 rounded-tr-xl  flex overflow-x-scroll md:mx-auto mx-3 md:w-4/5  p-10 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']">
           <div className="flex flex-nowrap lg:ml-40 md:ml-20 sm:ml-0 ">
             {topCourse.map((course, index) => (
               <div className="inline-block px-3 " key={index}>
@@ -19,14 +19,14 @@ function TopCourses() {
                   <a href="#">
                     <img
                       className="rounded-t-lg max-h-[250px] w-full"
-                      src="https://source.unsplash.com/random"
+                      src="https://placehold.co/600x400"
                       alt="product image"
                     />
                   </a>
                   <div className="px-5 pb-5">
                     <a href="#">
                       <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
-                        Apple Watch Series 7 GPS, Aluminium Case, Starlight
+                        Apple Watch Series 7 GPS
                         Sport
                       </h5>
                     </a>
@@ -91,9 +91,9 @@ function TopCourses() {
                       </span>
                       <a
                         href="#"
-                        className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                        className="text-white bg-[#734b5e] hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center "
                       >
-                        Add to cart
+                        Read more
                       </a>
                     </div>
                   </div>

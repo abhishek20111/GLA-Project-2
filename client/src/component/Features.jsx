@@ -1,98 +1,224 @@
 import React from "react";
 import { Slide } from "react-awesome-reveal";
-function Features() {
+{/* <Slide cascade damping={0.3}> */}
+function Features(){
   return (
-    <div className="bg-gradient-to-b from-transparent flex justify-center to-transparent min-h-fit xl:pt-0 sm:my-40 my-20">
-      <div className="container px-6 w-full">
-        <section className=" text-gray-800 text-center">
-          <h2 className="text-3xl font-bold mb-20">Why is it so great?</h2>
-
-          <div className="grid lg:gap-x-12 lg:grid-cols-3">
-            <Slide cascade damping={0.3}>
-              <div className="mb-12 lg:mb-0">
-                <div className="rounded-lg shadow-lg  h-full block bg-white">
-                  <div className="flex justify-center">
-                    <div className="p-4 bg-fuchsia-600 rounded-full shadow-lg inline-block -mt-8">
-                      <svg
-                        className="w-8 h-8 text-white"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 512 512"
-                      >
-                        <path
-                          fill="currentColor"
-                          d="M192 208c0-17.67-14.33-32-32-32h-16c-35.35 0-64 28.65-64 64v48c0 35.35 28.65 64 64 64h16c17.67 0 32-14.33 32-32V208zm176 144c35.35 0 64-28.65 64-64v-48c0-35.35-28.65-64-64-64h-16c-17.67 0-32 14.33-32 32v112c0 17.67 14.33 32 32 32h16zM256 0C113.18 0 4.58 118.83 0 256v16c0 8.84 7.16 16 16 16h16c8.84 0 16-7.16 16-16v-16c0-114.69 93.31-208 208-208s208 93.31 208 208h-.12c.08 2.43.12 165.72.12 165.72 0 23.35-18.93 42.28-42.28 42.28H320c0-26.51-21.49-48-48-48h-32c-26.51 0-48 21.49-48 48s21.49 48 48 48h181.72c49.86 0 90.28-40.42 90.28-90.28V256C507.42 118.83 398.82 0 256 0z"
-                        ></path>
-                      </svg>
-                    </div>
-                  </div>
-                  <div className="p-6">
-                    <h5 className="text-lg font-semibold mb-4">Experienced Mentors</h5>
-                    <p>
-                      We have with us a group of highly experienced mentors, who, at some point or other have been part of the industry themselves.
-                      So that you may work peacefully knowing you are in good hands. 
-                    </p>
-                  </div>
-                </div>
+    <div className="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
+      <div className="max-w-xl mb-10 md:mx-auto sm:text-center lg:max-w-2xl md:mb-12">
+        <div>
+          <p className="inline-block px-3 py-px mb-4 text-xs font-semibold tracking-wider text-teal-900 uppercase rounded-full bg-teal-accent-400">
+            INTRODUCING
+          </p>
+        </div>
+        <h2 className="max-w-lg mb-6 font-sans text-3xl font-bold leading-none tracking-tight text-[#734b5e] sm:text-4xl md:mx-auto">
+          <span className="relative inline-block">
+            <svg
+              viewBox="0 0 52 24"
+              fill="currentColor"
+              className="absolute top-0 left-0 z-0 hidden w-32 -mt-8 -ml-20 text-blue-gray-100 lg:w-32 lg:-ml-28 lg:-mt-10 sm:block"
+            >
+              <defs>
+                <pattern
+                  id="07690130-d013-42bc-83f4-90de7ac68f76"
+                  x="0"
+                  y="0"
+                  width=".135"
+                  height=".30"
+                >
+                  <circle cx="1" cy="1" r=".7" />
+                </pattern>
+              </defs>
+              <rect
+                fill="url(#07690130-d013-42bc-83f4-90de7ac68f76)"
+                width="52"
+                height="24"
+              />
+            </svg>
+            <span className="relative">The</span>
+          </span>{' '}
+          quick, brown fox jumps over a lazy dog
+        </h2>
+        <p className="text-base text-gray-700 md:text-lg">
+          Sed ut perspiciatis unde omnis iste natus error sit voluptatem
+          accusantium doloremque rem aperiam, eaque ipsa quae.
+        </p>
+      </div>
+      <div className="grid max-w-screen-lg mx-auto space-y-6 lg:grid-cols-2 lg:space-y-0 lg:divide-x">
+        <div className="space-y-6 sm:px-16">
+          <div className="flex flex-col max-w-md sm:flex-row">
+            <div className="mb-4 mr-4">
+              <div className="flex items-center justify-center w-12 h-12 rounded-full bg-cyan-100">
+                <svg
+                  className="w-8 h-8 text-deep-purple-accent-400 sm:w-10 sm:h-10"
+                  stroke="currentColor"
+                  viewBox="0 0 52 52"
+                >
+                  <polygon
+                    strokeWidth="3"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    fill="none"
+                    points="29 13 14 29 25 29 23 39 38 23 27 23"
+                  />
+                </svg>
               </div>
-              <div className="mb-12 lg:mb-0">
-                <div className="rounded-lg shadow-lg h-full block bg-white">
-                  <div className="flex justify-center">
-                    <div className="p-4 bg-fuchsia-600 rounded-full shadow-lg inline-block -mt-8">
-                      <svg
-                        className="w-8 h-8 text-white"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 512 512"
-                      >
-                        <path
-                          fill="currentColor"
-                          d="M466.5 83.7l-192-80a48.15 48.15 0 0 0-36.9 0l-192 80C27.7 91.1 16 108.6 16 128c0 198.5 114.5 335.7 221.5 380.3 11.8 4.9 25.1 4.9 36.9 0C360.1 472.6 496 349.3 496 128c0-19.4-11.7-36.9-29.5-44.3zM256.1 446.3l-.1-381 175.9 73.3c-3.3 151.4-82.1 261.1-175.8 307.7z"
-                        ></path>
-                      </svg>
-                    </div>
-                  </div>
-                  <div className="p-6">
-                    <h5 className="text-lg font-semibold mb-4">
-                      Vast Network of companies
-                    </h5>
-                    <p>
-                      Our PR and Media Relationship game has been on top since the very beginning, ensuring that we maintain a vast newtork of companines
-                      and recruiters. Rest assured, placements will never be a problem.
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div className="">
-                <div className="rounded-lg shadow-lg h-full block bg-white">
-                  <div className="flex justify-center">
-                    <div className="p-4 bg-fuchsia-600 rounded-full shadow-lg inline-block -mt-8">
-                      <svg
-                        className="w-8 h-8 text-white"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 512 512"
-                      >
-                        <path
-                          fill="currentColor"
-                          d="M505.12019,19.09375c-1.18945-5.53125-6.65819-11-12.207-12.1875C460.716,0,435.507,0,410.40747,0,307.17523,0,245.26909,55.20312,199.05238,128H94.83772c-16.34763.01562-35.55658,11.875-42.88664,26.48438L2.51562,253.29688A28.4,28.4,0,0,0,0,264a24.00867,24.00867,0,0,0,24.00582,24H127.81618l-22.47457,22.46875c-11.36521,11.36133-12.99607,32.25781,0,45.25L156.24582,406.625c11.15623,11.1875,32.15619,13.15625,45.27726,0l22.47457-22.46875V488a24.00867,24.00867,0,0,0,24.00581,24,28.55934,28.55934,0,0,0,10.707-2.51562l98.72834-49.39063c14.62888-7.29687,26.50776-26.5,26.50776-42.85937V312.79688c72.59753-46.3125,128.03493-108.40626,128.03493-211.09376C512.07526,76.5,512.07526,51.29688,505.12019,19.09375ZM384.04033,168A40,40,0,1,1,424.05,128,40.02322,40.02322,0,0,1,384.04033,168Z"
-                        />
-                      </svg>
-                    </div>
-                  </div>
-                  <div className="p-6">
-                    <h5 className="text-lg font-semibold mb-4">
-                      Trusted
-                    </h5>
-                    <p>
-                      Several years in the industry, we have been through a lot and have learned even more, and we have used that knowledge to build a brand that is trusted by all, students and recruiters alike. 
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </Slide>
+            </div>
+            <div>
+              <h6 className="mb-3 text-xl font-bold leading-5">
+                The deep ocean
+              </h6>
+              <p className="text-sm text-gray-900">
+                Webtwo ipsum orkut reddit meebo skype vimeo jajah spock empressr
+                zimbra, mobly napster.
+              </p>
+            </div>
           </div>
-        </section>
+          <div className="flex flex-col max-w-md sm:flex-row">
+            <div className="mb-4 mr-4">
+              <div className="flex items-center justify-center w-12 h-12 rounded-full bg-cyan-100">
+                <svg
+                  className="w-8 h-8 text-deep-purple-accent-400 sm:w-10 sm:h-10"
+                  stroke="currentColor"
+                  viewBox="0 0 52 52"
+                >
+                  <polygon
+                    strokeWidth="3"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    fill="none"
+                    points="29 13 14 29 25 29 23 39 38 23 27 23"
+                  />
+                </svg>
+              </div>
+            </div>
+            <div>
+              <h6 className="mb-3 text-xl font-bold leading-5">
+                When has justice
+              </h6>
+              <p className="text-sm text-gray-900">
+                Lookout flogging bilge rat main sheet bilge water nipper fluke
+                to go on account heave down clap of thunder.
+              </p>
+            </div>
+          </div>
+          <div className="flex flex-col max-w-md sm:flex-row">
+            <div className="mb-4 mr-4">
+              <div className="flex items-center justify-center w-12 h-12 rounded-full bg-cyan-100">
+                <svg
+                  className="w-8 h-8 text-deep-purple-accent-400 sm:w-10 sm:h-10"
+                  stroke="currentColor"
+                  viewBox="0 0 52 52"
+                >
+                  <polygon
+                    strokeWidth="3"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    fill="none"
+                    points="29 13 14 29 25 29 23 39 38 23 27 23"
+                  />
+                </svg>
+              </div>
+            </div>
+            <div>
+              <h6 className="mb-3 text-xl font-bold leading-5">
+                Leverage agile
+              </h6>
+              <p className="text-sm text-gray-900">
+                The first mate and his Skipper too will do their very best to
+                make the others comfortable.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div className="space-y-6 sm:px-16">
+          <div className="flex flex-col max-w-md sm:flex-row">
+            <div className="mb-4 mr-4">
+              <div className="flex items-center justify-center w-12 h-12 rounded-full bg-cyan-100">
+                <svg
+                  className="w-8 h-8 text-deep-purple-accent-400 sm:w-10 sm:h-10"
+                  stroke="currentColor"
+                  viewBox="0 0 52 52"
+                >
+                  <polygon
+                    strokeWidth="3"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    fill="none"
+                    points="29 13 14 29 25 29 23 39 38 23 27 23"
+                  />
+                </svg>
+              </div>
+            </div>
+            <div>
+              <h6 className="mb-3 text-xl font-bold leading-5">
+                Organically grow
+              </h6>
+              <p className="text-sm text-gray-900">
+                Skate ipsum dolor sit amet, alley oop vert mute-air Colby Carter
+                flail 180 berm over the sea.
+              </p>
+            </div>
+          </div>
+          <div className="flex flex-col max-w-md sm:flex-row">
+            <div className="mb-4 mr-4">
+              <div className="flex items-center justify-center w-12 h-12 rounded-full bg-cyan-100">
+                <svg
+                  className="w-8 h-8 text-deep-purple-accent-400 sm:w-10 sm:h-10"
+                  stroke="currentColor"
+                  viewBox="0 0 52 52"
+                >
+                  <polygon
+                    strokeWidth="3"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    fill="none"
+                    points="29 13 14 29 25 29 23 39 38 23 27 23"
+                  />
+                </svg>
+              </div>
+            </div>
+            <div>
+              <h6 className="mb-3 text-xl font-bold leading-5">
+                Have a good one
+              </h6>
+              <p className="text-sm text-gray-900">
+                Cheese on toast airedale the big cheese. Danish fontina cheesy
+                grin airedale danish fontina.
+              </p>
+            </div>
+          </div>
+          <div className="flex flex-col max-w-md sm:flex-row">
+            <div className="mb-4 mr-4">
+              <div className="flex items-center justify-center w-12 h-12 rounded-full bg-cyan-100">
+                <svg
+                  className="w-8 h-8 text-deep-purple-accent-400 sm:w-10 sm:h-10"
+                  stroke="currentColor"
+                  viewBox="0 0 52 52"
+                >
+                  <polygon
+                    strokeWidth="3"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    fill="none"
+                    points="29 13 14 29 25 29 23 39 38 23 27 23"
+                  />
+                </svg>
+              </div>
+            </div>
+            <div>
+              <h6 className="mb-3 text-xl font-bold leading-5">
+                A slice of heaven
+              </h6>
+              <p className="text-sm text-gray-900">
+                A flower in my garden, a mystery in my panties. Heart attack
+                never stopped old Big Bear.
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
-}
+};
 
 export default Features;
