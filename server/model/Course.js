@@ -10,6 +10,5 @@ const sample = new mongoose.Schema({
   syllabus: [String],
   extraDescription: String,
   enrollID: [String]
-  
 }, { timestamps: true });
 module.exports = mongoose.model("Course", sample); 
