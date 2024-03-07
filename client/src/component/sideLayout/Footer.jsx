@@ -38,7 +38,7 @@ export default () => {
               title="Our phone"
               className="transition-colors duration-300 text-deep-purple-accent-400 hover:text-deep-purple-800"
             >
-              850-123-5021
+              999-999-9999
             </a>
           </div>
           <div className="flex">
