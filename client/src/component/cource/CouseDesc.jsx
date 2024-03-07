@@ -100,7 +100,7 @@ function CourseDesc() {
             <h1 className="italic md:text-2xl text-lg text-gray-600 font-thin">
               Details:
             </h1>
-            <p className="italic text-gray-500 text-lg outline-dashed outline-1 rounded-sm md:rounded-md mb-5 md:mb-10">
+            <p className="italic p-2 text-gray-500 text-lg outline-dashed outline-1 rounded-sm md:rounded-md mb-5 md:mb-10">
               {course.extraDescription}{" "}
             </p>
             <div className="md:flex justify-between">
@@ -202,7 +202,7 @@ function CourseDesc() {
             <Zoom>
               <h1 className="font-thin md:text-2xl text-xl">Course Content:</h1>
               <div className="">
-                <ol className="md:mx-5 marker:text-gray-500 marker:font-thin font-thin list-decimal md:h-[250px] max-h-[200px] overflow-auto">
+                <ol className="md:mx-5 marker:text-gray-500 marker:font-thin font-thin list-decimal max-h-full overflow-auto">
                   {course.syllabus &&
                     course.syllabus.map((data, ind) => (
                       <li
