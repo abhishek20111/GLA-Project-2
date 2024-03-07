@@ -10,37 +10,39 @@ const Profile = () => {
   const [mycourses, setMyCourses] = useState([]);
   const [imageChange, setImageChange] = useState(null);
   const [imageUrl, setImageUrl] = useState('');
-  const userId = useSelector((state) => state.userData.token);
   const dispacter = useDispatch();
   const profileImage = useSelector((state) => state.userData.profileImage);
+  const emailUser = useSelector((state) => state.userData.email);
 
   const detail = useSelector((state) => state.userData);
   useEffect(() => setUserInfo(detail), []);
 
   
 
-  const fetchData = async () => {
+  const fetchData = async (email) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get("http://localhost:8080/cource/getMyCourses", {
+      const response = await axios.post("http://localhost:8080/cource/getMyCourses", {email},{
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
+      console.log(response.data);
       setMyCourses(response.data.courses);
     } catch (error) {
       console.error("Error fetching courses:", error);
     }
   };
-  const fetchMyData = async () => {
+  const fetchMyData = async (email) => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get("http://localhost:8080/cource/getCourses", {
+      const response = await axios.post("http://localhost:8080/cource/getCourses",{email} ,{
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(response.data.courses);
+      console.log(response.data);
+
       setCourses(response.data.courses);
     } catch (error) {
       console.error("Error fetching courses:", error);
@@ -56,18 +58,18 @@ const Profile = () => {
       console.log(url);
       setImageUrl(url)
       dispacter(updateprofileImage(url));
-      changeProfileImage();
+      changeProfileImage(url);
       return url; 
     } catch (error) {
       console.error("Error uploading image:", error);
       return null;
     }
   };
-  const changeProfileImage = async () => {
+  const changeProfileImage = async (url) => {
     try {
       console.log(imageUrl);
       const token = localStorage.getItem("token");
-      const response = await axios.put(`http://localhost:8080/updateProfileImage`, {imageUrl},{
+      const response = await axios.put(`http://localhost:8080/updateProfileImage`, {imageUrl:url},{
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -80,9 +82,11 @@ const Profile = () => {
   }
 
 
+  const emailToGo = emailUser
   useEffect(() => {
-    fetchMyData();
-    fetchData();
+    console.log(emailToGo);
+    fetchMyData(emailToGo);
+    fetchData(emailToGo);
     if (imageChange !== null) {
       uploadImage();
     }
@@ -96,11 +100,11 @@ const Profile = () => {
           <h2 className="text-lg font-bold mb-4">Profile</h2>
           <div className="border rounded-md p-4 mb-4">
             <label htmlFor="dropzone-file" className="flex justify-center">
-              <div className="md:w-1/2  border-2 rounded-xl">
+              <div className="md:w-1/2  border-2 p-2 rounded-xl">
                 <img
                   src={`${profileImage ? profileImage : "https://www.seekpng.com/png/detail/41-410093_circled-user-icon-user-profile-icon-png.png"}`}
                   alt="User Profile"
-                  className=" object-cover rounded-full h-[20rem] w-[20rem]"
+                  className="  object-cover rounded-full h-[20rem] w-[20rem]"
                 />
                 <input
                     id="dropzone-file"

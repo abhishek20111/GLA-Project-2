@@ -6,6 +6,7 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const sendEmail  = require('../mailer/mail')
 const middleware = require('../middleware/middleware')
+const authenticateToken = require('../middleware/middleware')
 
 
 
@@ -67,7 +68,7 @@ router.post("/loginUser", async (req, res) => {
 router.put('/updateProfileImage', middleware, async (req, res) => {
     const userId = req.user._id;
     const { imageUrl } = req.body;
-  console.log("updateProfileImage"+imageUrl);
+  console.log("updateProfileImage "+imageUrl);
     try {
       // Find the user by userId
       const user = await User.findById(userId);
@@ -153,4 +154,33 @@ router.post('/reset-password', async (req, res) => {
         return res.status(500).json({ error: "Internal server error" });
     }
 });
+
+router.get('/getallUser', authenticateToken, async (req, res) => {
+    try {
+        console.log("getUser data");
+        if (req.user.role !== "Super Admin") {
+            return res.status(302).json({ message: "Unauthorized Access!" });
+        }
+        const users = await User.find()
+        return res.status(200).json(users);
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({ error: err });
+    }
+});
+router.post('/deletUser', authenticateToken, async (req, res) => {
+    try {
+        console.log("Delete user - "+ req.body.id);
+        if (req.user.role !== "Super Admin") {
+            return res.status(302).json({ message: "Unauthorized Access!" });
+        }
+        const users = await User.findByIdAndDelete(req.body.id)
+        console.log(users);
+        return res.status(200).json({meassage: "User Deleted Succesfuuly"});
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({ error: err });
+    }
+});
+
 module.exports = router; 

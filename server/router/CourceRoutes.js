@@ -139,17 +139,17 @@ router.post('/uploadVideo', middleware, async (req, res) => {
 });
 
 
-router.get('/getCourses', middleware, async (req, res) => {
+router.post('/getCourses', middleware, async (req, res) => {
     try {
         // Check the user's role
-        const { role, email } = req.user;
+        const { role } = req.user;
 
         if (role === 'User') {
             return res.status(403).json({ error: 'Unauthorized access' });
         }
 
         // Find all courses created by the user's email
-        const courses = await Course.find({ createBy: email }).sort({ createdAt: 'desc' });
+        const courses = await Course.find({ createBy: req.body.email }).sort({ createdAt: 'desc' });
 
         res.status(200).json({ courses });
     } catch (error) {
@@ -170,15 +170,16 @@ router.get('/getAllCourses', async (req, res) => {
 });
 
 
-router.get('/getMyCourses', middleware, async (req, res) => {
+router.post('/getMyCourses', middleware, async (req, res) => {
     try {
+        // console.log("getMyCource ", req.body);
         // Find the user by its ID along with the 'courceId' field
-        const user = await User.findById(req.user._id);
+        const user = await User.findOne({email : req.body.email});
 
         if (!user) {
             return res.status(404).json({ error: 'User not found' });
         }
-
+ 
         // Extract the courses from the user's 'courceId' array
         const userCourses = user.courceId;
 

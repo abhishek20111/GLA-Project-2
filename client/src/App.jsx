@@ -7,9 +7,9 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ErrorPage from "./component/ErrorPage";
 
-import Navbar from "./component/Navbar";
+import Navbar from "./component/sideLayout/Navbar.jsx";
 import Footer from "./component/sideLayout/Footer";
-const Home = lazy(() => import("./component/Home"));
+import Home from './component/sideLayout/Home/Home.jsx';
 const Signin = lazy(() => import("./component/auth/Signin"));
 const Signup = lazy(() => import("./component/auth/Signup"));
 const UserProfile = lazy(() => import("./component/profile/UserProfile"));
@@ -18,17 +18,18 @@ const Reset_Password = lazy(() => import("./component/auth/Reset_Password"));
 const VerifyEmail = lazy(() => import("./component/auth/VerifyEmail"));
 const About = lazy(() => import("./component/sideLayout/About"));
 const Internship = lazy(() => import("./component/sideLayout/Intership"));
-const VideoWindow = lazy(() => import("./component/VideoWindow"));
-const Manage = lazy(() => import("./component/Manage"));
+const VideoWindow = lazy(() => import("./component/MangeVideo/VideoWindow.jsx"));
+const Manage = lazy(() => import("./component/MangeVideo/Manage.jsx"));
 const Logout = lazy(() => import("./component/auth/Logout"));
 const MyCource = lazy(() => import("./component/cource/MyCource"));
 const Cource = lazy(() => import("./component/cource/Cource"));
 const CourseDesc = lazy(() => import("./component/cource/CouseDesc.jsx"));
 const UploadVideo = lazy(() => import("./component/cource/uploadCource/UploadVideo"));
-const YourVideo = lazy(() => import("./component/YourVideo"));
+const YourVideo = lazy(() => import("./component/cource/uploadCource/YourVideo.jsx"));
 
 import { Helmet } from "react-helmet";
 import Loading from '../src/assets/logo/loading.gif'
+import AllUser from "./component/manageUser/AllUser.jsx";
 
 const USER_TYPE = {
   PUBLIC: "Public User",
@@ -101,6 +102,7 @@ function AppRoutes() {
         <Route path="/course_description" element={<UserElement><CourseDesc /></UserElement>} />
         <Route path="/uploadVideo" element={<AdminElement><UploadVideo /></AdminElement>} />
         <Route path="/yourVideo" element={<AdminElement><YourVideo /></AdminElement>} />
+        <Route path="/userMange" element={<OnlySuperAdminElement><AllUser /></OnlySuperAdminElement>} />
       </Routes>
     </>
   );
@@ -134,6 +136,15 @@ function AdminElement({ children }) {
 
   if (
     CURRENT_USER_TYPE === USER_TYPE.ADMIN ||
+    CURRENT_USER_TYPE === USER_TYPE.SUPER_ADMIN
+  )
+    return <>{children}</>;
+  else return <>do not access to Admin domain</>;
+}
+function OnlySuperAdminElement({ children }) {
+  const CURRENT_USER_TYPE = useSelector((state) => state.userData.role);
+
+  if (
     CURRENT_USER_TYPE === USER_TYPE.SUPER_ADMIN
   )
     return <>{children}</>;
