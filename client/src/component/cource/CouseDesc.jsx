@@ -17,17 +17,102 @@ function CourseDesc() {
   const navigate = useNavigate();
   const location = useLocation();
   const course = location.state && location.state.course;
-  const email = useSelector((state) => state.userData.email);
-
+  const userInfo = useSelector((state) => state.userData);
+  const token = localStorage.getItem("token");
   if (!course) {
     // Redirect to '/signin' if course data is not available
     return navigate("/signin");
   }
+  function loadScript(src) {
+    return new Promise((resolve) => {
+      const script = document.createElement("script");
+      script.src = src;
+      script.onload = () => {
+        resolve(true);
+      };
+      script.onerror = () => {
+        resolve(false);
+      };
+      document.body.appendChild(script);
+    });
+  }
 
-  const handleAddCourse = async (e, id) => {
-    e.preventDefault();
-    const token = localStorage.getItem("token");
+  async function displayRazorpay(courseId) {
+    console.log("clicked");
+    const res = await loadScript(
+      "https://checkout.razorpay.com/v1/checkout.js"
+    );
 
+    if (!res) {
+      alert("Razorpay SDK failed to load. Are you online?");
+      return;
+    }
+    const result = await axios.post("http://localhost:8080/payment/orders", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    if (!result) {
+      alert("Server error. Are you online?");
+      return;
+    }
+
+    const { amount, id: order_id, currency } = result.data;
+
+    const options = {
+      key: "rzp_test_hCTnA3u7pb9fAs",
+      amount: amount.toString(),
+      checkout: {
+        method: {
+          netbanking: 1,
+          card: 1,
+          upi: 1,
+          wallet: 1,
+        },
+      },
+      currency: currency,
+      name: "Soumya Corp.",
+      description: "Test Transaction",
+      image: {},
+      order_id: order_id,
+      handler: async function (response) {
+        const data = {
+          orderCreationId: order_id,
+          razorpayPaymentId: response.razorpay_payment_id,
+          razorpayOrderId: response.razorpay_order_id,
+          razorpaySignature: response.razorpay_signature,
+        };
+        console.log("moving towards verification")
+        const result = await axios.post(
+          "http://localhost:8080/payment/success",
+          data,
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+
+        alert(result.data.msg);
+        if (result.data.msg === "success") {
+          console.log("payment Successful")
+          handleAddCourse(courseId);
+        }
+      },
+      prefill: {
+        name: userInfo.name,
+        email: userInfo.email,
+        contact: "9999999999",
+      },
+      notes: {
+        courseId: courseId,
+        courseName: course.title,
+      },
+      theme: {
+        color: "#61dafb",
+      },
+    };
+
+    const paymentObject = new window.Razorpay(options);
+    paymentObject.open();
+  }
+
+  const handleAddCourse = async (id) => {
+    console.log("adding course");
     try {
       const response = await axios.post(
         "http://localhost:8080/cource/addCourse",
@@ -50,7 +135,6 @@ function CourseDesc() {
 
   const handleRemoveCourse = async (e, id) => {
     e.preventDefault();
-    const token = localStorage.getItem("token");
 
     try {
       const response = await axios.post(
@@ -72,23 +156,21 @@ function CourseDesc() {
     }
   };
 
-  {
-    console.log(course);
-  }
   return (
     <div className="bg-gradient-to-r from-white via-blue-200 to-white">
       <Helmet>
         <title>LearnUp</title>
         <meta name="description" content="LearnUp Courses Page" />
-        <meta name="keywords" content="LearnUp, intership, LearnUp, Home, Study, Contest, Education, Learning platform, course, buy courses, courses" />
+        <meta
+          name="keywords"
+          content="LearnUp, intership, LearnUp, Home, Study, Contest, Education, Learning platform, course, buy courses, courses"
+        />
       </Helmet>
       <div className="flex flex-wrap items-center justify-between pb-2 mx-1 mt-2 md:mt-5 md:mx-5">
         <h1 className="md:text-4xl text-3xl mx-2 font-semibold">
           {course.title}
         </h1>
-        <h2 className="text-slate-400">
-          by {" "+course.createBy}
-        </h2>
+        <h2 className="text-slate-400">by {" " + course.createBy}</h2>
       </div>
       <div className="flex flex-wrap">
         <div className="md:mx-5 mx-2 w-full"></div>
@@ -106,61 +188,52 @@ function CourseDesc() {
             <div className="md:flex justify-between">
               {!content ? (
                 <div className=" my-2">
-                  
                   <button
                     onClick={() => setContent(!content)}
                     className="md:border-2 flex items-center hover:text-white hover:bg-blue-400 transition-all duration-300 rounded-lg md:rounded-xl px-2 md:h-[50px] h-[35px] bg-white border-blue-500 text-blue-500 md:text-lg text-md group"
                   >
                     <svg
-                    clipRule="evenodd"
-                    fillRule="evenodd"
-                    trokeLinejoin="round"
-                    stroke-miterlimit="2"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 text-blue-500 group-hover:bg-white group-hover:rounded-full mr-2"
-                  >
-                    <path
-                      d="m12.002 2.005c5.518 0 9.998 4.48 9.998 9.997 0 5.518-4.48 9.998-9.998 9.998-5.517 0-9.997-4.48-9.997-9.998 0-5.517 4.48-9.997 9.997-9.997zm0 1.5c-4.69 0-8.497 3.807-8.497 8.497s3.807 8.498 8.497 8.498 8.498-3.808 8.498-8.498-3.808-8.497-8.498-8.497zm0 6.5c-.414 0-.75.336-.75.75v5.5c0 .414.336.75.75.75s.75-.336.75-.75v-5.5c0-.414-.336-.75-.75-.75zm-.002-3c.552 0 1 .448 1 1s-.448 1-1 1-1-.448-1-1 .448-1 1-1z"
-                      fillRule="nonzero"
-                    />
-                  </svg>
-                    <p>
-
-                    View More Contents
-                  </p>
+                      clipRule="evenodd"
+                      fillRule="evenodd"
+                      trokeLinejoin="round"
+                      stroke-miterlimit="2"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-6 text-blue-500 group-hover:bg-white group-hover:rounded-full mr-2"
+                    >
+                      <path
+                        d="m12.002 2.005c5.518 0 9.998 4.48 9.998 9.997 0 5.518-4.48 9.998-9.998 9.998-5.517 0-9.997-4.48-9.997-9.998 0-5.517 4.48-9.997 9.997-9.997zm0 1.5c-4.69 0-8.497 3.807-8.497 8.497s3.807 8.498 8.497 8.498 8.498-3.808 8.498-8.498-3.808-8.497-8.498-8.497zm0 6.5c-.414 0-.75.336-.75.75v5.5c0 .414.336.75.75.75s.75-.336.75-.75v-5.5c0-.414-.336-.75-.75-.75zm-.002-3c.552 0 1 .448 1 1s-.448 1-1 1-1-.448-1-1 .448-1 1-1z"
+                        fillRule="nonzero"
+                      />
+                    </svg>
+                    <p>View More Contents</p>
                   </button>
                 </div>
-              ):
-                (<div className=" my-2">
-                  
+              ) : (
+                <div className=" my-2">
                   <button
                     onClick={() => setContent(!content)}
                     className="md:border-2 flex items-center hover:text-white hover:bg-blue-400 transition-all duration-300 rounded-lg md:rounded-xl px-2 md:h-[50px] h-[35px] bg-white border-blue-500 text-blue-500 md:text-lg text-md group"
                   >
                     <svg
-                    clipRule="evenodd"
-                    fillRule="evenodd"
-                    trokeLinejoin="round"
-                    stroke-miterlimit="2"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 text-blue-500 group-hover:bg-white group-hover:rounded-full mr-2"
-                  >
-                    <path
-                      d="m12.002 2.005c5.518 0 9.998 4.48 9.998 9.997 0 5.518-4.48 9.998-9.998 9.998-5.517 0-9.997-4.48-9.997-9.998 0-5.517 4.48-9.997 9.997-9.997zm0 1.5c-4.69 0-8.497 3.807-8.497 8.497s3.807 8.498 8.497 8.498 8.498-3.808 8.498-8.498-3.808-8.497-8.498-8.497zm0 6.5c-.414 0-.75.336-.75.75v5.5c0 .414.336.75.75.75s.75-.336.75-.75v-5.5c0-.414-.336-.75-.75-.75zm-.002-3c.552 0 1 .448 1 1s-.448 1-1 1-1-.448-1-1 .448-1 1-1z"
-                      fillRule="nonzero"
-                    />
-                  </svg>
-                    <p>
-
-                    View Less Contents
-                  </p>
+                      clipRule="evenodd"
+                      fillRule="evenodd"
+                      trokeLinejoin="round"
+                      stroke-miterlimit="2"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-6 text-blue-500 group-hover:bg-white group-hover:rounded-full mr-2"
+                    >
+                      <path
+                        d="m12.002 2.005c5.518 0 9.998 4.48 9.998 9.997 0 5.518-4.48 9.998-9.998 9.998-5.517 0-9.997-4.48-9.997-9.998 0-5.517 4.48-9.997 9.997-9.997zm0 1.5c-4.69 0-8.497 3.807-8.497 8.497s3.807 8.498 8.497 8.498 8.498-3.808 8.498-8.498-3.808-8.497-8.498-8.497zm0 6.5c-.414 0-.75.336-.75.75v5.5c0 .414.336.75.75.75s.75-.336.75-.75v-5.5c0-.414-.336-.75-.75-.75zm-.002-3c.552 0 1 .448 1 1s-.448 1-1 1-1-.448-1-1 .448-1 1-1z"
+                        fillRule="nonzero"
+                      />
+                    </svg>
+                    <p>View Less Contents</p>
                   </button>
                 </div>
-              )
-              }
-              {course.enrollID && course.enrollID.includes(email) ? (
+              )}
+              {course.enrollID && course.enrollID.includes(userInfo.email) ? (
                 <div className="flex justify-between outline-1 items-center">
                   <div className="flex">
                     <p className="mr-1">Remove from</p>
@@ -183,7 +256,7 @@ function CourseDesc() {
                   </div>
                   <button
                     onClick={(e) => {
-                      handleAddCourse(e, course._id);
+                      displayRazorpay(course._id);
                     }}
                     className="transition-all duration-300 text-green-500 border-2 hover:text-white border-green-500  focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg md:text-lg text-md px-5 md:h-[50px] h-[35px] text-center mx-2  "
                   >

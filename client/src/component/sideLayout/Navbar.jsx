@@ -25,7 +25,7 @@ function Navbar() {
 
   useEffect(() =>{
     setUserInfo(detail)
-  }, []);
+  });
   const CURRENT_USER_TYPE = useSelector((state) => state.userData.role);
   // console.log(CURRENT_USER_TYPE);
   return (
@@ -62,7 +62,7 @@ function Navbar() {
             {isLogin ? (
               <div className="w-fit">
                 <div className="px-4 py-3">
-                  <span className="block font-bold  text-md text-gray-900 ">
+                  <span className="font-bold  text-md text-gray-900 ">
                     {userInfo.name}
                   </span>
                   <span className="block text-sm font-medium text-gray-500 truncate">
@@ -73,33 +73,13 @@ function Navbar() {
                   <li className="px-2">
                     <Link
                       to="/UserProfile"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 "
+                      className="block px-2 py-2 text-sm text-gray-700 hover:bg-gray-100 "
                     >
                       Dashboard
                     </Link>
                   </li>
-<<<<<<< HEAD:client/src/component/Navbar.jsx
-                  {/* <li>
-                    <a
-                      href="#"
-                      className="block px-4 py-2 text-sm text-white hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                    >
-                      Settings
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      className="block px-4 py-2 text-sm text-white hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                    >
-                      Earnings
-                    </a>
-                  </li> */}
-                  <li className="px-2">
-=======
                  
                   <li>
->>>>>>> 129dff27c65afe5eb2eefd0b1facdb7a6bb0aa3c:client/src/component/sideLayout/Navbar.jsx
                       <div
                         onClick={() => {
                           navigate("/logout");
@@ -218,7 +198,7 @@ function Navbar() {
                   to="/userMange"
                   className={`block py-2 pl-3 pr-4  rounded md:bg-transparent ${
                     location.pathname === "/userMange" ? "text-yellow-300" : "text-white"
-                  } md:p-0 dark:text-white hover:text-yellow-300`}
+                  } md:p-0  hover:text-yellow-300`}
                 >
                   User 
                 </Link>
