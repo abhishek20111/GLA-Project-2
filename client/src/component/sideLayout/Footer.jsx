@@ -44,12 +44,12 @@ export default () => {
           <div className="flex">
             <p className="mr-1 text-gray-800">Email:</p>
             <a
-              href="mailto:info@lorem.mail"
+              href="LearnUp@gmail.com"
               aria-label="Our email"
               title="Our email"
               className="transition-colors duration-300 text-deep-purple-accent-400 hover:text-deep-purple-800"
             >
-              info@lorem.mail
+              LearnUp@gmail.com
             </a>
           </div>
           <div className="flex">
@@ -105,7 +105,7 @@ export default () => {
       </div>
       <div className="flex flex-col-reverse justify-between pt-5 pb-10 border-t lg:flex-row">
         <p className="text-sm text-gray-600">
-          © Copyright 2020 Lorem Inc. All rights reserved.
+          © Copyright 2024 Edu Inc. All rights reserved.
         </p>
         <ul className="flex flex-col mb-3 space-y-2 lg:mb-0 sm:space-y-0 sm:space-x-5 sm:flex-row">
           <li>

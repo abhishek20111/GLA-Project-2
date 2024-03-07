@@ -4,12 +4,14 @@ import Delete from "../../assets/logo/delete.png";
 import NotVerified from "../../assets/logo/NotVerified.png";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
 function AllUser() {
   const [userData, setUserData] = useState([]);
   const [change, setChange] = useState(true);
   const notify1 = (msg) => toast.success(msg);
   const notify4 = (msg) => toast.error(msg);
+  const navigate = useNavigate();
 
   const fetchUserData = async () => {
     try {
@@ -50,7 +52,7 @@ function AllUser() {
 
   return (
     <div className="container">
-      <div className=" w-[80%] mx-auto mt-8 ">
+      <div className=" w-[80%] mx-auto mt-8 min-h-[400px]">
         <table className="w-full border-collapse border border-gray-300">
           <thead>
             <tr className="bg-gray-200">
@@ -65,12 +67,12 @@ function AllUser() {
             </tr>
           </thead>
           <tbody>
-            {userData.map((user) => (
+            {userData && userData.map((user) => (
               <tr key={user._id} className="border border-gray-300">
-                <td className="border border-gray-300 px-4 py-2">
+                <td onClick={()=> navigate("/UserProfile", { state: { email: user.email } })}  className="cursor-pointer hover:text-blue-400 border border-gray-300 px-4 py-2">
                   {user.name}
                 </td>
-                <td className="border border-gray-300 px-4 py-2">
+                <td  className="border border-gray-300 px-4 py-2">
                   {user.email}
                 </td>
                 <td className="border border-gray-300 px-4 py-2">

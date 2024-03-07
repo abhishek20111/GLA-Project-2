@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { uploadToCloudinary } from "../helper/upload";
 import { updateprofileImage } from "../../store/UserSilce";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const [userInfo, setUserInfo] = useState([]);
@@ -13,6 +13,8 @@ const Profile = () => {
   const [imageUrl, setImageUrl] = useState("");
   const dispacter = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+  const emailFromProps = location.state && location.state.email;
   const profileImage = useSelector((state) => state.userData.profileImage);
   const emailUser = useSelector((state) => state.userData.email);
 
@@ -32,7 +34,8 @@ const Profile = () => {
         }
       );
       console.log(response.data);
-      if (!profileImage)
+      setUserInfo(response.data.user)
+      if (!profileImage && response.data.user.email === emailUser)
         dispacter(updateprofileImage(response.data.user.profileImage));
       setMyCourses(response.data.courses);
     } catch (error) {
@@ -95,7 +98,7 @@ const Profile = () => {
     }
   };
 
-  const emailToGo = emailUser;
+  const emailToGo = emailFromProps || emailUser;
   useEffect(() => {
     console.log(emailToGo);
     fetchMyData(emailToGo);
@@ -116,9 +119,9 @@ const Profile = () => {
               <div className="md:w-1/2  border-2 p-2 rounded-xl">
                 <img
                   src={`${
-                    profileImage
+                    userInfo.email === emailUser
                       ? profileImage
-                      : "https://www.seekpng.com/png/detail/41-410093_circled-user-icon-user-profile-icon-png.png"
+                      : userInfo.profileImage
                   }`}
                   alt="User Profile"
                   className="  object-cover rounded-full h-[20rem] w-[20rem]"
