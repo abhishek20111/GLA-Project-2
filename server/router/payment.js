@@ -7,6 +7,10 @@ const bodyParser = require("body-parser");
 const crypto = require("crypto");
 router.use(bodyParser.urlencoded({ extended: true }));
 router.use(bodyParser.json());
+const mongoose = require('mongoose')
+// const User = mongoose.model('USER')
+// const Transactions = mongoose.model('Transactions')
+// const Course = mongoose.model('Course')
 router.post("/orders", async (req, res) => {
   try {
     const instance = new Razorpay({
@@ -38,6 +42,7 @@ router.post("/success", async (req, res) => {
       razorpayPaymentId,
       razorpayOrderId,
       razorpaySignature,
+      courseId
     } = req.body;
     // Creating our own digest
     // The format should be like this:
@@ -55,6 +60,13 @@ router.post("/success", async (req, res) => {
     // THE PAYMENT IS LEGIT & VERIFIED
     // YOU CAN SAVE THE DETAILS IN YOUR DATABASE IF YOU WANT
     console.log("transaction legit");
+    // const transaction = new Transactions({
+    //   orderId: razorpayOrderId,
+    //   paymentId: razorpayPaymentId,
+    // });
+    // await transaction.save();
+    // const user = await User.findById(req.user._id);
+    // user.transactions.push(transaction._id);
     res.json({
       msg: "success",
       orderId: razorpayOrderId,

@@ -19,6 +19,7 @@ function CourseDesc() {
   const course = location.state && location.state.course;
   const userInfo = useSelector((state) => state.userData);
   const token = localStorage.getItem("token");
+  console.log(userInfo);
   if (!course) {
     // Redirect to '/signin' if course data is not available
     return navigate("/signin");
@@ -83,7 +84,7 @@ function CourseDesc() {
         console.log("moving towards verification")
         const result = await axios.post(
           "http://localhost:8080/payment/success",
-          data,
+          {data, courseId},
           { headers: { Authorization: `Bearer ${token}` } }
         );
 

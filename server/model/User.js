@@ -1,7 +1,5 @@
 const mongoose = require('mongoose');
 const { ObjectId } = mongoose.Schema.Types
-
-
 const sample = new mongoose.Schema({
     name: String,
     email: {
@@ -16,8 +14,10 @@ const sample = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    
-    
+    transactions: [{
+        type: ObjectId,
+        ref: "Transactions"
+    }],   
 },{timestamps: true});
 module.exports = mongoose.model("USER", sample);
 
