@@ -29,7 +29,7 @@ function Navbar() {
   const CURRENT_USER_TYPE = useSelector((state) => state.userData.role);
   // console.log(CURRENT_USER_TYPE);
   return (
-    <nav className="bg-cyan-950 from-cyan-950 via-cyan-950 px-2 sm:px-4 py-2.5 rounded">
+    <nav className="bg-cyan-950 from-cyan-950 via-cyan-950 px-2 sm:px-4 py-2.5">
       <div className="container flex flex-wrap items-center justify-between mx-auto">
         <a link to="/" className="flex items-center">
           <img
@@ -42,7 +42,7 @@ function Navbar() {
         <div className="flex items-center md:order-2 ">
           <button
             type="button"
-            className="flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+            className="flex mr-3  text-sm bg-gray-800 rounded-full md:mr-0"
             id="user-menu-button"
             aria-expanded="false"
             data-dropdown-toggle="user-dropdown"
@@ -56,24 +56,24 @@ function Navbar() {
             />
           </button>
           <div
-            className="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600"
+            className="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 shadow-lg"
             id="user-dropdown"
           >
             {isLogin ? (
               <div className="w-fit">
                 <div className="px-4 py-3">
-                  <span className="block font-bold  text-md text-gray-900 dark:text-white">
+                  <span className="block font-bold  text-md text-gray-900 ">
                     {userInfo.name}
                   </span>
-                  <span className="block text-sm font-medium text-gray-500 truncate dark:text-gray-400">
+                  <span className="block text-sm font-medium text-gray-500 truncate">
                     {userInfo.email}
                   </span>
                 </div>
                 <ul className="py-2" aria-labelledby="user-menu-button">
-                  <li>
+                  <li className="px-2">
                     <Link
                       to="/UserProfile"
-                      className="block px-4 py-2 text-sm text-white hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 "
                     >
                       Dashboard
                     </Link>
@@ -94,12 +94,12 @@ function Navbar() {
                       Earnings
                     </a>
                   </li> */}
-                  <li>
+                  <li className="px-2">
                       <div
                         onClick={() => {
                           navigate("/logout");
                         }}
-                        className="block cursor-pointer px-4 py-2 text-sm  hover:rounded hover:bg-blue-500 hover:text-lg transition-all hover:text-white text-white  dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                        className="block cursor-pointer px-4 py-2 text-sm  hover:rounded hover:border-2 hover:border-red-500 transition-all hover:font-bold text-red-600"
                       >
                         Sign out
                       </div>
@@ -124,7 +124,7 @@ function Navbar() {
           <button
             data-collapse-toggle="mobile-menu-2"
             type="button"
-            className="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+            className="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
             aria-controls="mobile-menu-2"
             aria-expanded="false"
           >
@@ -166,7 +166,7 @@ function Navbar() {
                 href="#"
                 className={`block py-2 pl-3 pr-4  rounded md:bg-transparent ${
                   location.pathname === "/courses" ? "text-yellow-300" : "text-white"
-                } md:p-0 dark:text-white hover:text-yellow-300`}
+                } md:p-0 hover:text-yellow-300`}
               >
                 <Link to="/courses">Courses</Link>
               </a>
@@ -177,7 +177,7 @@ function Navbar() {
                   to="/myCourse"
                   className={`block py-2 pl-3 pr-4  rounded md:bg-transparent ${
                     location.pathname === "/myCourse" ? "text-yellow-300" : "text-white"
-                  } md:p-0 dark:text-white hover:text-yellow-300`}
+                  } md:p-0 hover:text-yellow-300`}
                 >
                   My Courses
                 </Link>
@@ -190,7 +190,7 @@ function Navbar() {
                   to="/manage"
                   className={`block py-2 pl-3 pr-4  rounded md:bg-transparent ${
                     location.pathname === "/manage" ? "text-yellow-300" : "text-white"
-                  } md:p-0 dark:text-white hover:text-yellow-300`}
+                  } md:p-0  hover:text-yellow-300`}
                 >
                   Manage
                 </Link>
@@ -201,7 +201,7 @@ function Navbar() {
                   to="/intern"
                   className={`block py-2 pl-3 pr-4  rounded md:bg-transparent ${
                     location.pathname === "/intern" ? "text-yellow-300" : "text-white"
-                  } md:p-0 dark:text-white hover:text-yellow-300`}
+                  } md:p-0  hover:text-yellow-300`}
                 >
                   Internships
                 </Link>
@@ -212,7 +212,7 @@ function Navbar() {
                 to="/about"
                 className={`block py-2 pl-3 pr-4  rounded md:bg-transparent ${
                   location.pathname === "/about" ? "text-yellow-300" : "text-white"
-                } md:p-0 dark:text-white hover:text-yellow-300`}
+                } md:p-0  hover:text-yellow-300`}
               >
                 About Us
               </Link>
