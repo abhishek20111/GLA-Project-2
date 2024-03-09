@@ -10,11 +10,10 @@ const transactions = new mongoose.Schema(
       type: String,
       required: true,
     },
-    user: {
-      type: ObjectId,
-      ref: "USER",
-      required: true,
-    },
+    email: {
+      type: String,
+      unique: true
+  },
     course: {
       type: ObjectId,
       ref: "Course",

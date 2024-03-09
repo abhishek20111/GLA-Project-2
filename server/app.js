@@ -3,6 +3,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 require('./model/User.js')
 require('./model/Course.js')
+require('./model/Transactions.js');
 const CourceRoute = require('./router/CourceRoutes.js');
 const UserRoute = require('./router/UserRoutes.js');
 const payment = require('./router/payment.js');

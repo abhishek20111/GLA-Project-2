@@ -5,6 +5,7 @@ const { ObjectId } = mongoose.Schema.Types
 const sample = new mongoose.Schema({
   title: String,
   createBy: String,
+  price: Number,
   courseUrl: [String],
   description: String,
   syllabus: [String],
