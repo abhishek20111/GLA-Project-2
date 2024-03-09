@@ -151,7 +151,7 @@ export default function LandingPage() {
             </div>
           </div>
           <div className="flex-1 mx-auto mt-10 xl:mt-0 ">
-            <div className="relative z-0 hidden sm:flex border-2 rounded-tl-3xl ">
+            <div className="relative z-0 sm:flex justify-center rounded-tl-3xl ">
               <img
                 src={GIF}
                 className="w-[600px] rounded-tl-3xl rounded-br-3xl ring ring-offset-8 outline-double"

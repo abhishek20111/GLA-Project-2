@@ -3,8 +3,10 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 require('./model/User.js')
 require('./model/Course.js')
+require('./model/Transactions.js');
 const CourceRoute = require('./router/CourceRoutes.js');
 const UserRoute = require('./router/UserRoutes.js');
+const payment = require('./router/payment.js');
 const dotenv = require('dotenv');
 const path = require('path')
 const bodyParser = require("body-parser");
@@ -21,10 +23,10 @@ const port = process.env.PORT || 8080;
 app.use(cors({ credentials: true }));
 
   
-// mongoose.connect(`mongodb://localhost:27017/miniProject2`) 
-mongoose.connect(`mongodb+srv://miniproject:${process.env.DB_PASSWORD}@cluster0.azdxdnh.mongodb.net/?retryWrites=true&w=majority`, { 
-   dbName:"miniProject2"
-})
+mongoose.connect(`mongodb://localhost:27017/miniProject2`) 
+// mongoose.connect(`mongodb+srv://miniproject:${process.env.DB_PASSWORD}@cluster0.azdxdnh.mongodb.net/?retryWrites=true&w=majority`, { 
+//    dbName:"miniProject2"
+// })
     .then(() => {
         console.log("Successfully connect to MongoDB");
     })
@@ -34,7 +36,7 @@ mongoose.connect(`mongodb+srv://miniproject:${process.env.DB_PASSWORD}@cluster0.
 
 app.use('/', UserRoute);
 app.use('/cource', CourceRoute);
- 
+app.use("/payment", payment);
 // // Serving the frontent
 // app.use(express.static(path.join(__dirname, 'client', 'dist')))
 // app.get("*", (req, res) => {
