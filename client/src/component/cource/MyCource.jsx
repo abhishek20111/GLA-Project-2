@@ -1,7 +1,7 @@
 import { Zoom } from "react-awesome-reveal";
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import VideoWindow from "../VideoWindow";
+import VideoWindow from "../MangeVideo/VideoWindow";
 import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { Helmet } from "react-helmet";
@@ -11,16 +11,16 @@ export default function MyCource() {
   const [courses, setCourses] = useState([]);
   const [filteredCourse, setfilteredCourse] = useState([]);
   const navigate = useNavigate();
-  const detail = useSelector((state) => state.userData.details);
+  const email = useSelector((state) => state.userData.email);
 
   useEffect(() => {
-    fetchData();
+    fetchData(email);
   }, []);
 
-  const fetchData = async () => {
+  const fetchData = async (email) => {
     try {
       const token = localStorage.getItem('token')
-      const response = await axios.get('http://localhost:8080/cource/getMyCourses',{
+      const response = await axios.post('http://localhost:8080/cource/getMyCourses',{email},{
         headers:{
           Authorization:`Bearer ${token}`
         }
