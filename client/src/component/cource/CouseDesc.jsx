@@ -19,7 +19,6 @@ function CourseDesc() {
   const course = location.state && location.state.course;
   const userInfo = useSelector((state) => state.userData);
   const token = localStorage.getItem("token");
-  console.log(userInfo);
   if (!course) {
     // Redirect to '/signin' if course data is not available
     return navigate("/signin");
@@ -38,8 +37,7 @@ function CourseDesc() {
     });
   }
 
-  async function displayRazorpay(courseId) {
-    console.log("clicked");
+  async function displayRazorpay(courseId, courseTitle, price) {
     const res = await loadScript(
       "https://checkout.razorpay.com/v1/checkout.js"
     );
@@ -48,7 +46,7 @@ function CourseDesc() {
       alert("Razorpay SDK failed to load. Are you online?");
       return;
     }
-    const result = await axios.post("http://localhost:8080/payment/orders", {
+    const result = await axios.post("http://localhost:8080/payment/orders", {price},{
       headers: { Authorization: `Bearer ${token}` },
     });
     if (!result) {
@@ -56,7 +54,7 @@ function CourseDesc() {
       return;
     }
 
-    const { amount, id: order_id, currency } = result.data;
+    const { amount, currency, id: order_id } = result.data;
 
     const options = {
       key: "rzp_test_hCTnA3u7pb9fAs",
@@ -70,8 +68,8 @@ function CourseDesc() {
         },
       },
       currency: currency,
-      name: "Soumya Corp.",
-      description: "Test Transaction",
+      name: "LearnUp Edutech",
+      description: courseTitle,
       image: {},
       order_id: order_id,
       handler: async function (response) {
@@ -80,15 +78,15 @@ function CourseDesc() {
           razorpayPaymentId: response.razorpay_payment_id,
           razorpayOrderId: response.razorpay_order_id,
           razorpaySignature: response.razorpay_signature,
+          courseId: courseId,
+          email: userInfo.email
         };
-        console.log("moving towards verification")
+        console.log(data)
         const result = await axios.post(
           "http://localhost:8080/payment/success",
-          {data, courseId},
+          {data},
           { headers: { Authorization: `Bearer ${token}` } }
         );
-
-        alert(result.data.msg);
         if (result.data.msg === "success") {
           console.log("payment Successful")
           handleAddCourse(courseId);
@@ -257,11 +255,11 @@ function CourseDesc() {
                   </div>
                   <button
                     onClick={(e) => {
-                      displayRazorpay(course._id);
+                      displayRazorpay(course._id, course.title, course.price);
                     }}
                     className="transition-all duration-300 text-green-500 border-2 hover:text-white border-green-500  focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg md:text-lg text-md px-5 md:h-[50px] h-[35px] text-center mx-2  "
                   >
-                    Add Course   
+                    Buy: ₹{course.price}   
                   </button>
                 </div>
               )}
