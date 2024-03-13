@@ -76,12 +76,13 @@ router.post("/success", async (req, res) => {
     });
     // console.log(transaction)
     await transaction.save();
-    console.log("txn saved");
+    // console.log("txn saved");
     const user = await User.findOne({email});
-    console.log(user.transactions);
+    // console.log(user.transactions);
     user.transactions.push(transaction._id);
-    console.log(user.transactions);
-    console.log("data saved");
+    user.save();
+    // console.log(user.transactions);
+    // console.log("data saved");
     res.json({
       msg: "success",
       orderId: razorpayOrderId,

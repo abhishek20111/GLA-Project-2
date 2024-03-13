@@ -4,7 +4,6 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import GIF from "../../assets/logo/Navbar.png";
 import { useSelector } from "react-redux";
 import { selectLoading } from "../../store/UserSilce.js";
-
 function Navbar() {
   const [userInfo, setUserInfo] = useState([]);
   const navigate = useNavigate();
@@ -17,7 +16,7 @@ function Navbar() {
   };
 
   const location = useLocation();
-
+  let path = location.pathname;
 
   const token = useSelector((state) => state.userData.token);
   const isLogin = useSelector((state) => state.userData.isLogin);
@@ -29,13 +28,12 @@ function Navbar() {
   const CURRENT_USER_TYPE = useSelector((state) => state.userData.role);
   // console.log(CURRENT_USER_TYPE);
   return (
-    <nav className="bg-cyan-950 from-cyan-950 via-cyan-950 px-2 sm:px-4 py-2.5">
+    <nav className={`${path == "/" || path == "home" ? "bg-cyan-950" : "bg-amber-950"} from-cyan-950 via-cyan-950 px-2 sm:px-4 py-2.5`}>
       <div className="container flex flex-wrap items-center justify-between mx-auto">
         <a link to="/" className="flex items-center">
           <img
             src={GIF}
             className="md:w-[100px] ml-3 w-28"
-            alt="Flowbite Logo"
           />
         </a>
 

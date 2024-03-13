@@ -8,7 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useSelector } from "react-redux";
 import { Zoom } from "react-awesome-reveal";
 import { Helmet } from "react-helmet";
-
+import bg from "../../assets/bg4.svg";
 function CourseDesc() {
   const [content, setContent] = useState(false);
   const notify1 = (info) => toast.success(info);
@@ -46,9 +46,13 @@ function CourseDesc() {
       alert("Razorpay SDK failed to load. Are you online?");
       return;
     }
-    const result = await axios.post("http://localhost:8080/payment/orders", {price},{
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const result = await axios.post(
+      "http://localhost:8080/payment/orders",
+      { price },
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
     if (!result) {
       alert("Server error. Are you online?");
       return;
@@ -79,16 +83,16 @@ function CourseDesc() {
           razorpayOrderId: response.razorpay_order_id,
           razorpaySignature: response.razorpay_signature,
           courseId: courseId,
-          email: userInfo.email
+          email: userInfo.email,
         };
-        console.log(data)
+        console.log(data);
         const result = await axios.post(
           "http://localhost:8080/payment/success",
-          {data},
+          { data },
           { headers: { Authorization: `Bearer ${token}` } }
         );
         if (result.data.msg === "success") {
-          console.log("payment Successful")
+          console.log("payment Successful");
           handleAddCourse(courseId);
         }
       },
@@ -156,7 +160,7 @@ function CourseDesc() {
   };
 
   return (
-    <div className="bg-gradient-to-r from-white via-blue-200 to-white">
+    <div className="" style={{ backgroundImage: `url(${bg})` }}>
       <Helmet>
         <title>LearnUp</title>
         <meta name="description" content="LearnUp Courses Page" />
@@ -165,137 +169,114 @@ function CourseDesc() {
           content="LearnUp, intership, LearnUp, Home, Study, Contest, Education, Learning platform, course, buy courses, courses"
         />
       </Helmet>
-      <div className="flex flex-wrap items-center justify-between pb-2 mx-1 mt-2 md:mt-5 md:mx-5">
-        <h1 className="md:text-4xl text-3xl mx-2 font-semibold">
-          {course.title}
-        </h1>
-        <h2 className="text-slate-400">by {" " + course.createBy}</h2>
-      </div>
-      <div className="flex flex-wrap">
-        <div className="md:mx-5 mx-2 w-full"></div>
-        <div className="mx-2 flex flex-wrap md:flex-nowrap w-full">
-          <div className="w-full md:mx-2 border-2 md:px-5 p-1  md:rounded-2xl rounded-lg my-1">
-            <div className="text-2xl px-1 mb-5 md:mb-10  rounded-sm md:rounded-md my-5">
-              {course.description}
-            </div>
-            <h1 className="italic md:text-2xl text-lg text-gray-600 font-thin">
-              Details:
-            </h1>
-            <p className="italic p-2 text-gray-500 text-lg outline-dashed outline-1 rounded-sm md:rounded-md mb-5 md:mb-10">
-              {course.extraDescription}{" "}
-            </p>
-            <div className="md:flex justify-between">
-              {!content ? (
-                <div className=" my-2">
-                  <button
-                    onClick={() => setContent(!content)}
-                    className="md:border-2 flex items-center hover:text-white hover:bg-blue-400 transition-all duration-300 rounded-lg md:rounded-xl px-2 md:h-[50px] h-[35px] bg-white border-blue-500 text-blue-500 md:text-lg text-md group"
-                  >
-                    <svg
-                      clipRule="evenodd"
-                      fillRule="evenodd"
-                      trokeLinejoin="round"
-                      stroke-miterlimit="2"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-6 text-blue-500 group-hover:bg-white group-hover:rounded-full mr-2"
-                    >
-                      <path
-                        d="m12.002 2.005c5.518 0 9.998 4.48 9.998 9.997 0 5.518-4.48 9.998-9.998 9.998-5.517 0-9.997-4.48-9.997-9.998 0-5.517 4.48-9.997 9.997-9.997zm0 1.5c-4.69 0-8.497 3.807-8.497 8.497s3.807 8.498 8.497 8.498 8.498-3.808 8.498-8.498-3.808-8.497-8.498-8.497zm0 6.5c-.414 0-.75.336-.75.75v5.5c0 .414.336.75.75.75s.75-.336.75-.75v-5.5c0-.414-.336-.75-.75-.75zm-.002-3c.552 0 1 .448 1 1s-.448 1-1 1-1-.448-1-1 .448-1 1-1z"
-                        fillRule="nonzero"
-                      />
-                    </svg>
-                    <p>View More Contents</p>
-                  </button>
-                </div>
-              ) : (
-                <div className=" my-2">
-                  <button
-                    onClick={() => setContent(!content)}
-                    className="md:border-2 flex items-center hover:text-white hover:bg-blue-400 transition-all duration-300 rounded-lg md:rounded-xl px-2 md:h-[50px] h-[35px] bg-white border-blue-500 text-blue-500 md:text-lg text-md group"
-                  >
-                    <svg
-                      clipRule="evenodd"
-                      fillRule="evenodd"
-                      trokeLinejoin="round"
-                      stroke-miterlimit="2"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-6 text-blue-500 group-hover:bg-white group-hover:rounded-full mr-2"
-                    >
-                      <path
-                        d="m12.002 2.005c5.518 0 9.998 4.48 9.998 9.997 0 5.518-4.48 9.998-9.998 9.998-5.517 0-9.997-4.48-9.997-9.998 0-5.517 4.48-9.997 9.997-9.997zm0 1.5c-4.69 0-8.497 3.807-8.497 8.497s3.807 8.498 8.497 8.498 8.498-3.808 8.498-8.498-3.808-8.497-8.498-8.497zm0 6.5c-.414 0-.75.336-.75.75v5.5c0 .414.336.75.75.75s.75-.336.75-.75v-5.5c0-.414-.336-.75-.75-.75zm-.002-3c.552 0 1 .448 1 1s-.448 1-1 1-1-.448-1-1 .448-1 1-1z"
-                        fillRule="nonzero"
-                      />
-                    </svg>
-                    <p>View Less Contents</p>
-                  </button>
-                </div>
-              )}
-              {course.enrollID && course.enrollID.includes(userInfo.email) ? (
-                <div className="flex justify-between outline-1 items-center">
-                  <div className="flex">
-                    <p className="mr-1">Remove from</p>
-                    <p className="text-blue-600"> My Courses:</p>
-                  </div>
-                  <button
-                    onClick={(e) => {
-                      handleRemoveCourse(e, course._id);
-                    }}
-                    className="transition-all duration-300 text-red-500 border-2 hover:text-white border-red-500 hover:bg-gradient-to-r from-red-400 via-red-500 to-red-600 bg-white focus:ring-4 focus:outline-none focus:ring-red-300  font-medium rounded-lg md:text-lg text-md px-5 md:h-[50px] h-[35px] text-center mx-2 "
-                  >
-                    Remove
-                  </button>
-                </div>
-              ) : (
-                <div className="flex justify-between outline-1 items-center">
-                  <div className="flex">
-                    <p className="mr-1">Add to</p>
-                    <p className="text-blue-600"> My Courses:</p>
-                  </div>
-                  <button
-                    onClick={(e) => {
-                      displayRazorpay(course._id, course.title, course.price);
-                    }}
-                    className="transition-all duration-300 text-green-500 border-2 hover:text-white border-green-500  focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg md:text-lg text-md px-5 md:h-[50px] h-[35px] text-center mx-2  "
-                  >
-                    Buy: ₹{course.price}   
-                  </button>
-                </div>
-              )}
-            </div>
-          </div>
-
-          <div
-            className={`w-full ${
-              content === true ? "block" : "hidden"
-            } md:mx-2 border-2 md:p-5 p-3 md:rounded-2xl rounded-lg my-1`}
-          >
-            <Zoom>
-              <h1 className="font-thin md:text-2xl text-xl">Course Content:</h1>
-              <div className="">
-                <ol className="md:mx-5 marker:text-gray-500 marker:font-thin font-thin list-decimal max-h-full overflow-auto">
-                  {course.syllabus &&
-                    course.syllabus.map((data, ind) => (
-                      <li
-                        className="m-5 text-lg font-medium pl-5 border-b"
-                        key={ind}
-                      >
-                        {data}
-                      </li>
-                    ))}
-                </ol>
+      <div className="">
+        <div className=" mx-auto gap-2 md:flex align-top bg-amber-950">
+          <div className="flex-1 mx-auto md:p-2 w-full justify-center">
+            <div className="flex flex-wrap gap-4 sm:flex-nowrap w-full">
+              <div className="flex-1 min-w-[280px] p-1 max-w-[500px] justify-center">
+                <img
+                  className="rounded-md w-full md:m-2"
+                  src="https://placehold.co/100x60"
+                  alt=""
+                />
               </div>
-            </Zoom>
+              <div className="max-w-[900px] ">
+                <div className=" items-center justify-between mx-1 md:mx-6">
+                  <h1 className="md:text-4xl text-3xl text-white font-semibold py-1">
+                    {course.title}
+                  </h1>
+                  <h2 className="text-slate-400">by {" " + course.createBy}</h2>
+                </div>
+                <div className=" text-white bg-opacity-85 text-xl font-light mb-5 md:mb-10 rounded-sm md:rounded-md my-3 p-4">
+                  {course.description}
+                </div>
+                <div className="flex justify-end md:mx-6">
+                  {course.enrollID &&
+                  course.enrollID.includes(userInfo.email) ? (
+                    <div className="flex justify-between outline-1 items-center">
+                      <div className="flex">
+                        <p className="mr-1">Remove from</p>
+                        <p className="text-blue-600"> My Courses:</p>
+                      </div>
+                      <button
+                        onClick={(e) => {
+                          handleRemoveCourse(e, course._id);
+                        }}
+                        className="transition-all duration-300 text-red-500 border-2 hover:text-white border-red-500 hover:bg-gradient-to-r from-red-400 via-red-500 to-red-600 bg-white focus:ring-4 focus:outline-none focus:ring-red-300  font-medium rounded-lg md:text-lg text-md px-5 md:h-[50px] h-[35px] text-center mx-2 "
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  ) : (
+                    <button
+                      href="#_"
+                      class="inline-flex overflow-hidden text-white bg-gray-900 rounded group"
+                      onClick={(e) => {
+                        displayRazorpay(course._id, course.title, course.price);
+                      }}
+                    >
+                      <span class="px-3.5 py-2 text-white bg-cyan-500 group-hover:bg-yellow-300 group-hover:text-amber-950 flex items-center justify-center">
+                        <svg
+                          class="w-5 h-5"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
+                          ></path>
+                        </svg>
+                      </span>
+                      <span class="pl-7 pr-9 py-2.5">₹{course.price}</span>
+                    </button>
+                  )}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-      <div className="flex md:flex-nowrap">
+        {/* <div className="flex md:flex-nowrap">
         <div className="rounded-md border-2 w-full  ">
-          <VideoWindow
-            selectedSyllabus={course.syllabus}
-            selectedVideoUrl={course.courseUrl}
-          />
+        <VideoWindow
+        selectedSyllabus={course.syllabus}
+        selectedVideoUrl={course.courseUrl}
+        />
+        </div>
+      </div> */}
+      </div>
+      <div className="flex justify-start flex-wrap pace-y-5 mx-auto">
+        <div className=" flex flex-wrap md:flex-nowrap w-full bg-gray-300 bg-opacity-80">
+          <div className="w-full md:mx-2 my-1 md:p-5 p-3 bg-white">
+            <h1 className="font-semibold md:text-2xl text-xl ml-2">
+              Insights:
+            </h1>
+            <p className="p-2 text-black text-lg mb-5 md:mb-10">
+              {course.extraDescription}
+            </p>
+          </div>
+          <div>
+            <div className=" w-full md:mx-2 border-2 md:p-5 p-3 bg-white my-1">
+              <h1 className="font-thin md:text-2xl text-xl ml-5">
+                Course Content:
+              </h1>
+
+              <ol className="md:mx-5 marker:text-black marker:font-thin font-thin list-decimal max-h-full overflow-auto ">
+                {course.syllabus &&
+                  course.syllabus.map((data, ind) => (
+                    <li
+                      className="bg-gray-100 rounded-md mx-5 my-1 text-lg font-medium pl-5 border-b"
+                      key={ind}
+                    >
+                      {data}
+                    </li>
+                  ))}
+              </ol>
+            </div>
+          </div>
         </div>
       </div>
     </div>
