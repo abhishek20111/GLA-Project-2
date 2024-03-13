@@ -9,7 +9,7 @@ import ErrorPage from "./component/ErrorPage";
 
 import Navbar from "./component/sideLayout/Navbar.jsx";
 import Footer from "./component/sideLayout/Footer";
-import Home from './component/sideLayout/Home/Home.jsx';
+import Home from "./component/sideLayout/Home/Home.jsx";
 const Signin = lazy(() => import("./component/auth/Signin"));
 const Signup = lazy(() => import("./component/auth/Signup"));
 const UserProfile = lazy(() => import("./component/profile/UserProfile"));
@@ -18,17 +18,23 @@ const Reset_Password = lazy(() => import("./component/auth/Reset_Password"));
 const VerifyEmail = lazy(() => import("./component/auth/VerifyEmail"));
 const About = lazy(() => import("./component/sideLayout/About"));
 const Internship = lazy(() => import("./component/sideLayout/Intership"));
-const VideoWindow = lazy(() => import("./component/MangeVideo/VideoWindow.jsx"));
+const VideoWindow = lazy(() =>
+  import("./component/MangeVideo/VideoWindow.jsx")
+);
 const Manage = lazy(() => import("./component/MangeVideo/Manage.jsx"));
 const Logout = lazy(() => import("./component/auth/Logout"));
 const MyCource = lazy(() => import("./component/cource/MyCource"));
 const Cource = lazy(() => import("./component/cource/Cource"));
 const CourseDesc = lazy(() => import("./component/cource/CouseDesc.jsx"));
-const UploadVideo = lazy(() => import("./component/cource/uploadCource/UploadVideo"));
-const YourVideo = lazy(() => import("./component/cource/uploadCource/YourVideo.jsx"));
+const UploadVideo = lazy(() =>
+  import("./component/cource/uploadCource/UploadVideo")
+);
+const YourVideo = lazy(() =>
+  import("./component/cource/uploadCource/YourVideo.jsx")
+);
 
 import { Helmet } from "react-helmet";
-import Loading from '../src/assets/logo/loading.gif'
+import Loading from "../src/assets/logo/loading.gif";
 import AllUser from "./component/manageUser/AllUser.jsx";
 
 const USER_TYPE = {
@@ -48,12 +54,18 @@ function App() {
       dispatch(setIsLogin(true));
     }
   }, [dispatch]);
-  
-  
+
   const LoadingSpinner = () => (
-    <di45v style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
-      <img src={Loading} alt="Loading..." className="h-[20vh]" />
-    </di45v>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+      className="h-screen"
+    >
+      <span class="loader"></span>
+    </div>
   );
 
   return (
@@ -71,9 +83,11 @@ function App() {
       </div>
       <div className="">
         <Suspense fallback={<LoadingSpinner />}>
-        <AppRoutes />
+          <AppRoutes />
         </Suspense>
-      <Footer />
+        <div className="absoulte inset-0 bottom-0">
+          <Footer />
+        </div>
       </div>
       <ToastContainer />
     </div>
@@ -81,28 +95,161 @@ function App() {
 }
 
 function AppRoutes() {
-    return (
+  return (
     <>
       <Routes>
-        <Route path="/signup" element={<PublicElement><Signup /></PublicElement>} />
-        <Route path="/forgot-password" element={<PublicElement><Forgot_Password /></PublicElement>} />
-        <Route path="/reset-password" element={<PublicElement><Reset_Password /></PublicElement>} />
-        <Route path="/VerifyEmail" element={<PublicElement><VerifyEmail /></PublicElement>} />
-        <Route path="/about" element={<PublicElement><About /></PublicElement>} />
-        <Route path="/intern" element={<PublicElement><Internship /></PublicElement>} />
-        <Route path="/VWindow" element={<PublicElement><VideoWindow /></PublicElement>} />
-        <Route path="/manage" element={<AdminElement><Manage /></AdminElement>} />
-        <Route path="/signin" element={<PublicElement><Signin /></PublicElement>} />
-        <Route path="/" element={<PublicElement><Home /></PublicElement>} />
-        <Route path="*" element={<PublicElement><ErrorPage /></PublicElement>} />
-        <Route path="/UserProfile" element={<UserElement><UserProfile /></UserElement>} />
-        <Route path="/logout" element={<UserElement><Logout /></UserElement>} />
-        <Route path="/myCourse" element={<UserElement><MyCource /></UserElement>} />
-        <Route path="/courses" element={<PublicElement><Cource /></PublicElement>} />
-        <Route path="/course_description" element={<UserElement><CourseDesc /></UserElement>} />
-        <Route path="/uploadVideo" element={<AdminElement><UploadVideo /></AdminElement>} />
-        <Route path="/yourVideo" element={<AdminElement><YourVideo /></AdminElement>} />
-        <Route path="/userMange" element={<OnlySuperAdminElement><AllUser /></OnlySuperAdminElement>} />
+        <Route
+          path="/signup"
+          element={
+            <PublicElement>
+              <Signup />
+            </PublicElement>
+          }
+        />
+        <Route
+          path="/forgot-password"
+          element={
+            <PublicElement>
+              <Forgot_Password />
+            </PublicElement>
+          }
+        />
+        <Route
+          path="/reset-password"
+          element={
+            <PublicElement>
+              <Reset_Password />
+            </PublicElement>
+          }
+        />
+        <Route
+          path="/VerifyEmail"
+          element={
+            <PublicElement>
+              <VerifyEmail />
+            </PublicElement>
+          }
+        />
+        <Route
+          path="/about"
+          element={
+            <PublicElement>
+              <About />
+            </PublicElement>
+          }
+        />
+        <Route
+          path="/intern"
+          element={
+            <PublicElement>
+              <Internship />
+            </PublicElement>
+          }
+        />
+        <Route
+          path="/VWindow"
+          element={
+            <PublicElement>
+              <VideoWindow />
+            </PublicElement>
+          }
+        />
+        <Route
+          path="/manage"
+          element={
+            <AdminElement>
+              <Manage />
+            </AdminElement>
+          }
+        />
+        <Route
+          path="/signin"
+          element={
+            <PublicElement>
+              <Signin />
+            </PublicElement>
+          }
+        />
+        <Route
+          path="/"
+          element={
+            <PublicElement>
+              <Home />
+            </PublicElement>
+          }
+        />
+        <Route
+          path="*"
+          element={
+            <PublicElement>
+              <ErrorPage />
+            </PublicElement>
+          }
+        />
+        <Route
+          path="/UserProfile"
+          element={
+            <UserElement>
+              <UserProfile />
+            </UserElement>
+          }
+        />
+        <Route
+          path="/logout"
+          element={
+            <UserElement>
+              <Logout />
+            </UserElement>
+          }
+        />
+        <Route
+          path="/myCourse"
+          element={
+            <UserElement>
+              <MyCource />
+            </UserElement>
+          }
+        />
+        <Route
+          path="/courses"
+          element={
+            <PublicElement>
+              <Cource />
+            </PublicElement>
+          }
+        />
+        <Route
+          path="/course_description"
+          element={
+            <UserElement>
+              <CourseDesc />
+            </UserElement>
+          }
+        />
+        <Route
+          path="/uploadVideo"
+          element={
+            <AdminElement>
+              <UploadVideo />
+            </AdminElement>
+          }
+        />
+        <Route
+          path="/yourVideo"
+          element={
+            <AdminElement>
+              <YourVideo />
+            </AdminElement>
+          }
+        />
+        <Route
+          path="/userMange"
+          element={
+            <OnlySuperAdminElement>
+              <AllUser />
+            </OnlySuperAdminElement>
+          }
+        />
       </Routes>
     </>
   );
@@ -144,10 +291,7 @@ function AdminElement({ children }) {
 function OnlySuperAdminElement({ children }) {
   const CURRENT_USER_TYPE = useSelector((state) => state.userData.role);
 
-  if (
-    CURRENT_USER_TYPE === USER_TYPE.SUPER_ADMIN
-  )
-    return <>{children}</>;
+  if (CURRENT_USER_TYPE === USER_TYPE.SUPER_ADMIN) return <>{children}</>;
   else return <>do not access to Admin domain</>;
 }
 

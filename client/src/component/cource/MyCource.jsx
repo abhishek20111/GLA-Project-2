@@ -1,4 +1,4 @@
-import { Zoom } from "react-awesome-reveal";
+import { Fade } from "react-awesome-reveal";
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import VideoWindow from "../MangeVideo/VideoWindow";
@@ -120,7 +120,7 @@ export default function MyCource() {
         </>
       ):
         (<div className="md:w-[95%] md:mx-auto rounded-md grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-0">
-        <Zoom cascade damping={0.5} triggerOnce={true}>
+        <Fade cascade damping={0.5} triggerOnce={true}>
         {filteredCourse.map((course, indx) => (
             <div className="m-2 group" key={indx}>
             <div className="w-sm group-hover:translate-y-2 group-hover:translate-x-1 group-hover:rounded-3xl transition-all duration-300 ease-in-out bg-white border border-gray-200 rounded-t-3xl relative group-hover:shadow-2xl group-hover:shadow-blue-900">
@@ -157,7 +157,7 @@ export default function MyCource() {
             </div>
           </div>
         ))}
-        </Zoom>
+        </Fade>
       </div>
       )}
     </div>

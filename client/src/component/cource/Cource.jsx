@@ -1,4 +1,4 @@
-import { Zoom } from "react-awesome-reveal";
+import { Fade } from "react-awesome-reveal";
 import React, { useEffect, useState } from "react";
 import Search from "./Search";
 import { Link, Navigate, useNavigate } from "react-router-dom";
@@ -8,22 +8,25 @@ import Signin from "../auth/Signin";
 import CourseDesc from "./CouseDesc";
 import { redirect } from "react-router-dom";
 import { Helmet } from "react-helmet";
+import bg from "../../assets/bg3.svg";
 
 export default function Cource() {
   const [courses, setCourses] = useState([]);
-  
+
   const navigate = useNavigate();
   const isLogin = useSelector((state) => state.userData.isLogin);
   const [filteredCourse, setFilteredCourse] = useState([]);
   useEffect(() => {
     fetchData();
-    console.log(courses);
+    // console.log(courses);
   }, []);
 
   const fetchData = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/cource/getAllCourses");
-      console.log(response.data.courses);
+      const response = await axios.get(
+        "http://localhost:8080/cource/getAllCourses"
+      );
+      // console.log(response.data.courses);
       setCourses(response.data.courses);
       setFilteredCourse(response.data.courses);
     } catch (error) {
@@ -52,11 +55,17 @@ export default function Cource() {
   };
 
   return (
-    <div className="mx-auto pb-16 h-full w-full bg-gradient-to-tr from-white  to-blue-400 min-h-screen">
+    <div
+      className="mx-auto pb-16 h-full w-full min-h-screen"
+      style={{ backgroundImage: `url(${bg})` }}
+    >
       <Helmet>
         <title>LearnUp | Courses Page</title>
         <meta name="description" content="LearnUp Courses Page" />
-        <meta name="keywords" content="LearnUp, intership, LearnUp, Home, Study, Contest, Education, Learning platform, course, buy courses, courses" />
+        <meta
+          name="keywords"
+          content="LearnUp, intership, LearnUp, Home, Study, Contest, Education, Learning platform, course, buy courses, courses"
+        />
       </Helmet>
       <div className=" text-white text-center flex justify-center">
         <div>
@@ -107,49 +116,51 @@ export default function Cource() {
         </div>
       </div>
       {/* <div className="bg-gray-200 md:w-3/4 rounded-md flex flex-wrap justify-center bg-gradient-to-tr from-indigo-300  to-indigo-700 min-h-screen"> */}
-      <div className="md:w-[95%] md:mx-auto rounded-md grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-0 ">
-        <Zoom cascade damping={0.5} triggerOnce={true}>
-        {filteredCourse.map((course, indx) => (
-          <div className="m-2 group" key={indx}>
-              <div className="w-sm group-hover:translate-y-2 group-hover:translate-x-1 group-hover:rounded-3xl transition-all duration-300 ease-in-out bg-white border border-gray-200 rounded-t-3xl relative group-hover:shadow-2xl group-hover:shadow-blue-900">
+      <div className="md:w-[95%] md:mx-auto rounded-md grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0 ">
+        <Fade cascade damping={0.5} triggerOnce={true}>
+          {filteredCourse.map((course, indx) => (
+            <div className="m-2 group" key={indx}>
+              <div className="w-sm group-hover:translate-y-0.5 group-hover:rounded-lg transition-all duration-300 ease-in-out bg-white border border-gray-200 rounded-t-lg relative group-hover:shadow-md group-hover:shadow-green-200">
                 <a href="#">
                   <img
-                    className="rounded-3xl group-hover:rounded-t-3xl w-full"
-                    src="https://source.unsplash.com/user/erondu/400x200"
+                    className="rounded-xl group-hover:rounded-t-xl w-full"
+                    src="https://placehold.co/100x60"
                     alt=""
                   />
                 </a>
-                <div className="p-5">
+                <div className="py-2 px-2">
                   <a href="#">
-                    <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white truncate">
+                    <h1 className="mb-2 text-xl font-semibold tracking-tight text-gray-900 dark:text-white ">
                       {course.title}
-                    </h5>
+                    </h1>
                   </a>
-                  <div className="absolute overflow-auto top-0 left-0 w-full h-full bg-white bg-opacity-90 p-5 opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100 group-hover:rounded-3xl">
-                    <div className="duration-700 transition transform ease-in-out group-hover:-translate-y-0 translate-y-16">
-                      <button
-                        onClick={() => handleSelectCourse(course)}
-                        className="border-2 mb-5 border-blue-500 text-sm font-medium text-center text-gray-500 rounded-lg hover:bg-blue-400 hover:text-white p-2 focus:ring-1  focus:ring-blue-300"
-                      >
-                        More Details
-                      </button>
-                    </div>
-                    <div className="text-gray-800 dark:text-gray-300 duration-700 transition transform ease-in-out group-hover:-translate-y-0 translate-y-16">
-                      <p className="italic">
-                        {course.description}
+                  <div className="absolute overflow-auto top-0 left-0 w-full h-full bg-white bg-opacity-90 p-5 opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100 group-hover:rounded-xl outline -outline-offset-4 outline-1">
+                    <div className="flex flex-col h-full justify-between text-gray-800 dark:text-gray-300 duration-700 transition transform ease-in-out group-hover:-translate-y-0 translate-y-4">
+                      <div>
+                        <h1 className="mb-2 text-xl font-semibold tracking-tight text-gray-900 dark:text-white ">
+                          {course.title}
+                        </h1>
+                        <p className=" text-black">
+                          {course.description.substring(0, 100) + "..."}
                         </p>
-                      <br />
-                      <br />
-                      <br />
+                      </div>
+                      <div className="flex justify-end duration-700 transition transform ease-in-out">
+                        <button
+                          onClick={() => handleSelectCourse(course)}
+                          className="border-2 border-blue-500 text-sm font-medium text-center text-gray-500 rounded-lg hover:bg-blue-400 hover:text-white p-2 focus:ring-1  focus:ring-blue-300"
+                        >
+                          More Details
+                        </button>
+                      </div>
                       {/* A bunch of things about the course Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illo, assumenda ipsum natus eaque atque unde! Necessitatibus molestias qui nobis est. Lorem ipsum dolor sit amet consectetur adipisicing elit. */}
                     </div>
-                    <div>Important: {course.extraDescription}</div>
+                    {/* <div>Important: {course.extraDescription}</div> */}
                   </div>
                 </div>
               </div>
-          </div>
-        ))}
-        </Zoom>
+            </div>
+          ))}
+        </Fade>
       </div>
     </div>
   );
