@@ -23,7 +23,7 @@ const port = process.env.PORT || 8080;
 app.use(cors({ credentials: true }));
 
   
-mongoose.connect(`mongodb://localhost:27017/miniProject2`) 
+mongoose.connect(`mongodb://127.0.0.1:27017/miniProject2`) 
 // mongoose.connect(`mongodb+srv://miniproject:${process.env.DB_PASSWORD}@cluster0.azdxdnh.mongodb.net/?retryWrites=true&w=majority`, { 
 //    dbName:"miniProject2"
 // })
