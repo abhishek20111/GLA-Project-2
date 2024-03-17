@@ -1,9 +1,10 @@
 import { useRef, useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import Review from "./Review";
+import { useSelector } from "react-redux";
 
 const VideoPlayer = ({ videoUrl, isPlaying }) => {
   const videoRef = useRef(null);
-
   useEffect(() => {
     if (isPlaying) {
       videoRef.current.play();
@@ -54,13 +55,15 @@ const Accordion = ({ syllabus, videoUrl, onAccordionClick }) => {
   );
 };
 
-const VideoWindow = ({ selectedSyllabus, selectedVideoUrl }) => {
+const VideoWindow = ({ selectedSyllabus, selectedVideoUrl, courceData }) => {
   const location = useLocation();
+  const userId = useSelector((state) => state.userData._id);
 
   const [selectIndex, setSelectIndex] = useState(-1);
   const syllabus = selectedSyllabus || location.state && location.state.selectedSyllabus;
   const videoUrl = selectedVideoUrl || location.state && location.state.selectedVideoUrl;
-  
+  const courceDetails = courceData || location.state && location.state.courceData;
+  console.log(courceDetails);
   const [selectedVideo, setSelectedVideo] = useState("");
   const [isVideoPlaying, setVideoPlaying] = useState(false);
 
@@ -69,6 +72,8 @@ const VideoWindow = ({ selectedSyllabus, selectedVideoUrl }) => {
     setVideoPlaying(true);
   };
   return (
+    <div className="flex flex-col">
+
     <div className="flex flex-col outline-double -outline-offset-8 rounded-2xl md:rounded-3xl md:flex-row bg-gray-100 bg-gradient-to-r from-white via-blue-200 to-white">
       <div className="md:w-1/2 w-full">
         <VideoPlayer videoUrl={selectedVideo} isPlaying={isVideoPlaying} />
@@ -93,6 +98,10 @@ const VideoWindow = ({ selectedSyllabus, selectedVideoUrl }) => {
               </div>
           ))}
         </div>
+      </div>
+    </div>
+      <div>
+        {userId && courceDetails && <Review userId={userId} courseDetails={courceDetails}/>}
       </div>
     </div>
   );

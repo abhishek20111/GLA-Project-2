@@ -19,6 +19,7 @@ const extractUserInfoFromToken = (token) => {
     const decodedToken = jwtDecode(token);
     return {
       name: decodedToken.name,
+      _id: decodedToken._id,
       role: decodedToken.role,
       email: decodedToken.email,
       verified: decodedToken.verified,
@@ -26,6 +27,7 @@ const extractUserInfoFromToken = (token) => {
     };
   } catch (error) {
     return {
+      id:'',
       name: '',
       role: '',
       email: '',
@@ -56,7 +58,8 @@ export const userSlice = createSlice({
     },
     updateToken: (state, action) => {
       state.token = action.payload;
-      const { name, role, email, verified, profileImage } = extractUserInfoFromToken(action.payload);
+      const { _id, name, role, email, verified, profileImage } = extractUserInfoFromToken(action.payload);
+      state._id = _id;
       state.name = name;
       state.role = role;
       state.email = email;

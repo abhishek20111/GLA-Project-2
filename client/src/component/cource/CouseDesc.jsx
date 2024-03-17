@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import { Zoom } from "react-awesome-reveal";
 import { Helmet } from "react-helmet";
 import bg from "../../assets/bg4.svg";
+import Rating from "./Rating";
 function CourseDesc() {
   const [content, setContent] = useState(false);
   const notify1 = (info) => toast.success(info);
@@ -248,7 +249,7 @@ function CourseDesc() {
         </div>
       </div> */}
       </div>
-      <div className="flex justify-start flex-wrap pace-y-5 mx-auto">
+      <div className="flex flex-col justify-start flex-wrap pace-y-5 mx-auto">
         <div className=" flex flex-wrap md:flex-nowrap w-full bg-gray-300 bg-opacity-80">
           <div className="w-full md:mx-2 my-1 md:p-5 p-3 bg-white">
             <h1 className="font-semibold md:text-2xl text-xl ml-2">
@@ -277,6 +278,9 @@ function CourseDesc() {
               </ol>
             </div>
           </div>
+        </div>
+        <div className="w-[100vw] p-4 bg-gray-300 flex  flex-col">
+          <Rating/>
         </div>
       </div>
     </div>

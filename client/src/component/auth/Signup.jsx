@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 
+
 export default function Signup() {
   const initialValue = {
     name: "",
@@ -11,6 +12,8 @@ export default function Signup() {
     password: "",
     CurrentUserType: "User",
   };
+  
+
   const navigate = useNavigate();
   const [userData, setUserData] = useState(initialValue);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);

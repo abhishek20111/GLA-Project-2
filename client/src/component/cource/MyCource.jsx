@@ -32,8 +32,8 @@ export default function MyCource() {
     }
   };
 
-  const handleSelectCourse = (syllabus, url) => {
-    navigate('/VWindow', { state: { selectedSyllabus: syllabus, selectedVideoUrl: url } });
+  const handleSelectCourse = (syllabus, url, cource) => {
+    navigate('/VWindow', { state: { selectedSyllabus: syllabus, selectedVideoUrl: url, courceData: cource } });
   };
   console.log(filteredCourse);
 
@@ -140,7 +140,7 @@ export default function MyCource() {
                 <div className="absolute overflow-auto top-0 left-0 w-full h-full bg-white bg-opacity-90 p-5 opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100 group-hover:rounded-3xl">
                   <div className="duration-700 transition transform ease-in-out group-hover:-translate-y-0 translate-y-16">
                     <button 
-                      onClick={() => handleSelectCourse(course.syllabus, course.courseUrl)}
+                      onClick={() => handleSelectCourse(course.syllabus, course.courseUrl, course)}
                       className="border-2 mb-5 border-blue-500 text-sm font-medium text-center text-gray-500 rounded-lg hover:bg-blue-400 hover:text-white p-2 focus:ring-1  focus:ring-blue-300"
                     >
                       Start Course
