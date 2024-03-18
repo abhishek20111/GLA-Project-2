@@ -9,15 +9,18 @@ import { useSelector } from "react-redux";
 import { Zoom } from "react-awesome-reveal";
 import { Helmet } from "react-helmet";
 import bg from "../../assets/bg4.svg";
+import Rating from "./Rating";
+import Review from "../MangeVideo/Review";
 function CourseDesc() {
-  const [content, setContent] = useState(false);
   const notify1 = (info) => toast.success(info);
   const notify2 = (info) => toast.info(info);
   const notify4 = (msg) => toast.error(msg);
   const navigate = useNavigate();
   const location = useLocation();
   const course = location.state && location.state.course;
+  console.log(course);
   const userInfo = useSelector((state) => state.userData);
+  const userId = useSelector((state) => state.userData._id);
   const token = localStorage.getItem("token");
   if (!course) {
     // Redirect to '/signin' if course data is not available
@@ -248,7 +251,7 @@ function CourseDesc() {
         </div>
       </div> */}
       </div>
-      <div className="flex justify-start flex-wrap pace-y-5 mx-auto">
+      <div className="flex flex-col justify-start flex-wrap pace-y-5 mx-auto">
         <div className=" flex flex-wrap md:flex-nowrap w-full bg-gray-300 bg-opacity-80">
           <div className="w-full md:mx-2 my-1 md:p-5 p-3 bg-white">
             <h1 className="font-semibold md:text-2xl text-xl ml-2">
@@ -278,6 +281,13 @@ function CourseDesc() {
             </div>
           </div>
         </div>
+        <div className="w-[100vw] p-4 bg-gray-300 flex  flex-col">
+          {console.log(course)}
+          <Rating review = {course.review}/>
+          <Review courseDetails={course} userId={userId}  />
+        </div>
+
+
       </div>
     </div>
   );

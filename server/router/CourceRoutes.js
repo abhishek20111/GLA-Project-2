@@ -143,13 +143,13 @@ router.post('/getCourses', middleware, async (req, res) => {
     try {
         // Check the user's role
         const { role } = req.user;
-
+        console.log("getCourses "+req.user.email);
         if (role === 'User') {
             return res.status(403).json({ error: 'Unauthorized access'});
         }
 
-        const courses = await Course.find({ createBy: req.body.email }).sort({ createdAt: 'desc' });
-     
+        const courses = await Course.find({ createBy: req.user.email }).sort({ createdAt: 'desc' });
+     console.log(courses);
         res.status(200).json({ courses});
     } catch (error) {
         console.error('Error retrieving courses:', error);
@@ -160,7 +160,8 @@ router.post('/getCourses', middleware, async (req, res) => {
 router.get('/getAllCourses', async (req, res) => {
     console.log("getAllCourses");
     try {
-        const courses = await Course.find();
+        const courses = await Course.find()
+                            .populate('review.createBy', '_id name profileImage');
         res.status(200).json({ courses });
     } catch (error) {
         console.error('Error retrieving courses:', error);
@@ -171,18 +172,15 @@ router.get('/getAllCourses', async (req, res) => {
 
 router.post('/getMyCourses', middleware, async (req, res) => {
     try {
-        // console.log("getMyCource ", req.body);
-        // Find the user by its ID along with the 'courceId' field
-        const user = await User.findOne({email : req.body.email});
+        const user = await User.findOne({ email: req.body.email });
 
         if (!user) {
             return res.status(404).json({ error: 'User not found' });
         }
-        // Extract the courses from the user's 'courceId' array
-        const userCourses = user.courceId;
 
-        // Find all courses that match any of the course IDs in the 'userCourses' array
-        const courses = await Course.find({ _id: { $in: userCourses } });
+        const userCourses = user.courceId;
+        const courses = await Course.find({ _id: { $in: userCourses } })
+                                .populate('review.createBy', '_id name profileImage');
 
         res.status(200).json({ courses, user });
     } catch (error) {
@@ -190,6 +188,34 @@ router.post('/getMyCourses', middleware, async (req, res) => {
         res.status(500).json({ error: 'Failed to retrieve courses' });
     }
 });
+ 
+
+router.post('/setReview/:courseId', middleware, async (req, res) => {
+    try {
+      const { star, comment } = req.body;
+      const courseId = req.params.courseId;
+      const userId = req.user.id;
+      
+    //   console.log(userId);
+      const course = await Course.findById(courseId);
+      if (!course) {
+        return res.status(404).json({ message: "Course not found" });
+      } 
+  
+      // Add the review to the course
+      course.review.push({ createBy: userId, star, comment }); // Change 'reviews' to 'review'
+      await course.save();
+  
+      res.status(201).json({ message: "Review added successfully" });
+    } catch (error) {
+      console.error("Error:", error);
+      res.status(500).json({ message: "Internal Server Error" });
+    }
+  });
+
+
+   
+  
 
 
 module.exports = router; 

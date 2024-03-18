@@ -18,7 +18,7 @@ const Profile = () => {
   const profileImage = useSelector((state) => state.userData.profileImage);
   const emailUser = useSelector((state) => state.userData.email);
 
-  const detail = useSelector((state) => state.userData);
+  const detail = useSelector((state) => state.userData.details);
   useEffect(() => setUserInfo(detail), []);
 
   const fetchData = async (email) => {
@@ -97,7 +97,7 @@ const Profile = () => {
       console.log(err);
     }
   };
-
+  
   const emailToGo = emailFromProps || emailUser;
   useEffect(() => {
     console.log(emailToGo);

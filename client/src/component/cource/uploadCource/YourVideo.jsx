@@ -4,6 +4,7 @@ import VideoManage from "../../MangeVideo/VideoManage";
 import { Zoom } from "react-awesome-reveal";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useSelector } from "react-redux";
 
 const YourVideo = () => {
   const [deleteIndex, setDeleteIndex] = useState(-1);
@@ -11,18 +12,19 @@ const YourVideo = () => {
   const notify1 = (info) => toast.success(info);
   const notify2 = () => toast.info("Under Maintainace....");
   const notify4 = (msg) => toast.error(msg);
+  const role = useSelector((state) => state.userData.role);
 
   const [courses, setCourses] = useState([]);
 
   const fetchData = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get("http://localhost:8080/getCourses", {
+      const response = await axios.post("http://localhost:8080/cource/getCourses", {role} ,{
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(response.data.courses);
+      console.log(response.data);
       setCourses(response.data.courses);
     } catch (error) {
       console.error("Error fetching courses:", error);
@@ -33,7 +35,7 @@ const YourVideo = () => {
       const id = deleteIndex;
       const token = localStorage.getItem("token");
       const response = await axios.post(
-        "http://localhost:8080/deleteCourse",
+        "http://localhost:8080/cource/deleteCourse",
         { id },
         {
           headers: {

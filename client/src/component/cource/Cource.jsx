@@ -88,9 +88,14 @@ export default function Cource() {
                 <input
                   className="relative text-sm leading-none text-gray-600 bg-white rounded w-full px-10 py-4 outline-none"
                   type="text"
-                  name
+                  name="searchKeyword"
                   id="searchKeyword"
                   placeholder="Search"
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter") {
+                      searchCourses(event.target.value);
+                    }
+                  }}
                 />
               </div>
             </div>

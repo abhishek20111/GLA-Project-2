@@ -149,9 +149,9 @@ function AppRoutes() {
         <Route
           path="/VWindow"
           element={
-            <PublicElement>
+            <UserElement>
               <VideoWindow />
-            </PublicElement>
+            </UserElement>
           }
         />
         <Route
