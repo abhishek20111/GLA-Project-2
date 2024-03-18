@@ -97,7 +97,7 @@ const Profile = () => {
       console.log(err);
     }
   };
-
+  
   const emailToGo = emailFromProps || emailUser;
   useEffect(() => {
     console.log(emailToGo);

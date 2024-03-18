@@ -4,7 +4,6 @@ import YourVideo from "../cource/uploadCource/YourVideo";
 import { Fade } from "react-awesome-reveal";
 
 export default function Manage() {
-  const [open, setOpen] = useState(true);
   const stepsItems = ["Upload", "Manage"];
   const [steps, setStep] = useState(0);
   return (

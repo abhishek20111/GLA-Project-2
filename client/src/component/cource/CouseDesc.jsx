@@ -10,15 +10,17 @@ import { Zoom } from "react-awesome-reveal";
 import { Helmet } from "react-helmet";
 import bg from "../../assets/bg4.svg";
 import Rating from "./Rating";
+import Review from "../MangeVideo/Review";
 function CourseDesc() {
-  const [content, setContent] = useState(false);
   const notify1 = (info) => toast.success(info);
   const notify2 = (info) => toast.info(info);
   const notify4 = (msg) => toast.error(msg);
   const navigate = useNavigate();
   const location = useLocation();
   const course = location.state && location.state.course;
+  console.log(course);
   const userInfo = useSelector((state) => state.userData);
+  const userId = useSelector((state) => state.userData._id);
   const token = localStorage.getItem("token");
   if (!course) {
     // Redirect to '/signin' if course data is not available
@@ -280,8 +282,12 @@ function CourseDesc() {
           </div>
         </div>
         <div className="w-[100vw] p-4 bg-gray-300 flex  flex-col">
-          <Rating/>
+          {console.log(course)}
+          <Rating review = {course.review}/>
+          <Review courseDetails={course} userId={userId}  />
         </div>
+
+
       </div>
     </div>
   );

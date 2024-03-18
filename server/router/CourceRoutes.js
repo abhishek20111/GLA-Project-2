@@ -160,7 +160,8 @@ router.post('/getCourses', middleware, async (req, res) => {
 router.get('/getAllCourses', async (req, res) => {
     console.log("getAllCourses");
     try {
-        const courses = await Course.find();
+        const courses = await Course.find()
+                            .populate('review.createBy', '_id name profileImage');
         res.status(200).json({ courses });
     } catch (error) {
         console.error('Error retrieving courses:', error);
@@ -171,25 +172,23 @@ router.get('/getAllCourses', async (req, res) => {
 
 router.post('/getMyCourses', middleware, async (req, res) => {
     try {
-        // console.log("<getMyCour></getMyCour>ce ", req.body);
-        // Find the user by its ID along with the 'courceId' field
-        const user = await User.findOne({email : req.body.email});
+        const user = await User.findOne({ email: req.body.email });
 
         if (!user) {
             return res.status(404).json({ error: 'User not found' });
         }
-        // Extract the courses from the user's 'courceId' array
+
         const userCourses = user.courceId;
-  
-        // Find all courses that match any of the course IDs in the 'userCourses' array
-        const courses = await Course.find({ _id: { $in: userCourses } });
- 
+        const courses = await Course.find({ _id: { $in: userCourses } })
+                                .populate('review.createBy', '_id name profileImage');
+
         res.status(200).json({ courses, user });
     } catch (error) {
         console.error('Error retrieving courses:', error);
         res.status(500).json({ error: 'Failed to retrieve courses' });
     }
 });
+ 
 
 router.post('/setReview/:courseId', middleware, async (req, res) => {
     try {
@@ -201,7 +200,7 @@ router.post('/setReview/:courseId', middleware, async (req, res) => {
       const course = await Course.findById(courseId);
       if (!course) {
         return res.status(404).json({ message: "Course not found" });
-      }
+      } 
   
       // Add the review to the course
       course.review.push({ createBy: userId, star, comment }); // Change 'reviews' to 'review'
@@ -213,7 +212,9 @@ router.post('/setReview/:courseId', middleware, async (req, res) => {
       res.status(500).json({ message: "Internal Server Error" });
     }
   });
-  
+
+
+   
   
 
 
