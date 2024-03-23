@@ -32,7 +32,7 @@ mongoose.connect(`mongodb+srv://miniproject:${process.env.DB_PASSWORD}@cluster0.
     })
     .catch(err => {
         console.error("Connection error", err.message);
-    });  
+    }); 
 
 app.use('/', UserRoute);
 app.use('/cource', CourceRoute);
