@@ -32,17 +32,17 @@ mongoose.connect(`mongodb+srv://miniproject:${process.env.DB_PASSWORD}@cluster0.
     })
     .catch(err => {
         console.error("Connection error", err.message);
-    });  
+    }); 
 
 app.use('/', UserRoute);
 app.use('/cource', CourceRoute);
 app.use("/payment", payment);
 // // Serving the frontent
-// app.use(express.static(path.join(__dirname, 'client', 'dist')))
-// app.get("*", (req, res) => {
-//     res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'))
+app.use(express.static(path.join(__dirname, 'dist')))
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, 'dist', 'index.html'))
 
-// }) 
+}) 
 
 app.listen(port, () => {
     console.log(`Server is running on port - ${port}`);
