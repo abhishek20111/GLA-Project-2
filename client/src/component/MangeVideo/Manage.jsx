@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import UploadVideo from "../cource/uploadCource/UploadVideo";
 import YourVideo from "../cource/uploadCource/YourVideo";
 import { Fade } from "react-awesome-reveal";
-
+import bg from "../../assets/bg4.svg";
 export default function Manage() {
   const stepsItems = ["Upload", "Manage"];
   const [steps, setStep] = useState(0);
@@ -27,7 +27,9 @@ export default function Manage() {
 
     //     </div>
     // </div>
-    <div className="bg-gradient-to-r from-white to-white via-blue-100 pt-1">
+    
+    <div className=" pt-1" style={{ backgroundImage: `url(${bg})` }}>
+      
       <div className="max-w-3xl my-2 mx-auto px-4 md:px-0">
         <ul
           aria-label="Steps"
@@ -90,6 +92,7 @@ export default function Manage() {
           ))}
         </ul>
       </div>
+      
       {steps === 0 && <Fade><UploadVideo /></Fade>}
       {steps === 1 && <Fade><YourVideo /></Fade>}
     </div>

@@ -7,7 +7,6 @@ import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import GIF from "../../../assets/loading.gif";
 import "../../../App.css";
-
 const UploadVideo = () => {
   const email = useSelector((state) => state.userData.email);
   const notify1 = (info) => toast.success(info);
@@ -17,6 +16,7 @@ const UploadVideo = () => {
   const navigate = useNavigate();
   const initialState = {
     title: "",
+    price: "",
     createBy: email,
     courseUrl: [],
     description: "",
@@ -29,9 +29,9 @@ const UploadVideo = () => {
   const [isUploading, setIsUploading] = useState(false);
   const [sure, setSure] = useState(false);
 
-  useEffect(() => {
-    console.log(JSON.stringify(userData));
-  }, [userData]);
+  // useEffect(() => {
+  // console.log(JSON.stringify(userData));
+  // }, [userData]);
 
   const handleInputChange2 = (event) => {
     const { name, value } = event.target;
@@ -149,30 +149,40 @@ const UploadVideo = () => {
 
   return (
     <>
-      <div className="flex sm:px-24  flex-wrap md:flex-nowrap min-h-screen bg-gradient-to-r from-white to-white via-blue-100">
-        <div className="my-5 mx-2 border-2 border-gray-300 w-full rounded-l-3xl ">
-          <input
-            type="text"
-            name="title"
-            placeholder="Course Title"
-            value={userData.title}
-            onChange={handleInputChange2}
-            className="custom-scrollbar m-2 mt-5 mb-5 px-4  py-8 border-2 focus:border placeholder:font-thin  rounded-md w-[95%] text-2xl md:w-[75%] h-[50px] md:text-4xl font-semibold"
-          />
+      <div className="flex sm:px-24  flex-wrap min-h-screen ">
+        <div className="my-5 mx-2 border-2 bg-white border-gray-300 w-full rounded-md">
+          <div className="flex flex-wrap md:flex-nowrap">
+            <input
+              type="text"
+              name="title"
+              placeholder="Course Title"
+              value={userData.title}
+              onChange={handleInputChange2}
+              className="custom-scrollbar m-2 my-2  py-4 placeholder:font-thin  rounded-md w-[95%] text-2xl md:w-[75%] h-[40px] md:text-xl font-semibold"
+            />
+            <input
+              type="number"
+              name="price"
+              placeholder="Price"
+              value={userData.price}
+              onChange={handleInputChange2}
+              className="custom-scrollbar m-2 my-2  py-4 placeholder:font-thin  rounded-md max-w-[25%] text-2xl h-[40px] md:text-xl font-semibold"
+            />
+          </div>
 
           <textarea
             name="description"
             placeholder="Description"
             value={userData.description}
             onChange={handleInputChange2}
-            className="custom-scrollbar mx-2 my-2 p-4 border w-[97%] border-gray-700 rounded-md md:text-2xl"
+            className="custom-scrollbar mx-2 font-thin my-1 py-2 border w-[97%] placeholder:font-thin rounded-md"
           ></textarea>
           <textarea
             name="extraDescription"
             placeholder="Additional Information"
             value={userData.extraDescription}
             onChange={handleInputChange2}
-            className="custom-scrollbar mx-2 my-2 p-4 border placeholder:italic  w-[97%] border-gray-700 rounded-md font-thin md:text-xl"
+            className="custom-scrollbar mx-2 my-1 py-2 placeholder:font-thin placeholder:italic w-[97%] border-gray-700 rounded-md font-thin"
           ></textarea>
 
           <div>
@@ -214,8 +224,8 @@ const UploadVideo = () => {
             </div>
           </div>
         </div>
-        <div className="my-5 mx-2 border-2 border-gray-300 pt-5 w-full flex flex-wrap rounded-r-3xl justify-center">
-          <div className="m-5 w-full">
+        <div className="mx-2 border-2 bg-white border-gray-300 w-full flex flex-wrap rounded-r-3xl justify-center">
+          <div className="mx-5 w-full">
             {/* <input
               type="file"
               accept="video/*"
@@ -226,9 +236,9 @@ const UploadVideo = () => {
             <div className="w-full flex">
               {selectedVideos.length == 0 && (
                 <div className=" p-4 bg-white m-auto rounded-lg w-full">
-                  <div className=" p-5 relative border-4 border-dotted border-gray-300 rounded-lg w-full">
+                  <div className=" border-gray-300 rounded-lg w-full">
                     <svg
-                      className="text-indigo-500 w-24 mx-auto mb-4"
+                      className="text-indigo-500 w-24 mx-auto"
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
                       viewBox="0 0 24 24"
@@ -270,32 +280,28 @@ const UploadVideo = () => {
                 <p className="w-full  text-lg font-semibold">
                   Videos Selected:
                 </p>
-                <div className="h-[500px] flex flex-wrap justify-center overflow-auto border-2 rounded-3xl border-black">
+                <div className="flex flex-wrap justify-center overflow-auto">
                   {selectedVideos.map((video, index) => (
-                    <div
-                      className=" rounded-md border-2 m-2 px-3 py-2"
-                      key={index}
-                    >
-                      <div className="mb-4 flex flex-col items-center">
-                        <div className="border-gray-800 border-2 py-1 px-1 flex mb-1 rounded-t-lg justify-between">
-                          <p className=" text-blue-600 font-semibold">
-                            {video.name}
-                          </p>
+                    <div className=" rounded-md m-2 px-1 py-2" key={index}>
+                      <div className="flex flex-col items-center">
+                        <video
+                          className="rounded-lg border-2 border-gray-300"
+                          src={URL.createObjectURL(video)}
+                          width="200"
+                          controls
+                        ></video>
+                        <div className="py-1 px-1 flex mb-1 rounded-t-lg justify-between">
+                          <p className=" text-blue-600">{video.name}</p>
                           <button
                             onClick={() => {
                               handleRemoveVideo(index);
                               console.log(selectedVideos);
                             }}
-                            className="ml-2 bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-3 rounded-sm"
+                            className="ml-2 bg-red-500 hover:bg-red-600 text-white  py-1 px-3 rounded-sm"
                           >
                             X
                           </button>
                         </div>
-                        <video
-                          src={URL.createObjectURL(video)}
-                          width="400"
-                          controls
-                        ></video>
                       </div>
                     </div>
                   ))}

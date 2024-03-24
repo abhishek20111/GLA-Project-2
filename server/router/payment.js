@@ -7,10 +7,10 @@ const bodyParser = require("body-parser");
 const crypto = require("crypto");
 router.use(bodyParser.urlencoded({ extended: true }));
 router.use(bodyParser.json());
-const mongoose = require('mongoose')
-const User = mongoose.model('USER')
-const Transactions = mongoose.model('Transactions')
-const Course = mongoose.model('Course')
+const mongoose = require("mongoose");
+const User = mongoose.model("USER");
+const Transactions = mongoose.model("Transactions");
+const Course = mongoose.model("Course");
 router.post("/orders", async (req, res) => {
   try {
     const instance = new Razorpay({
@@ -19,11 +19,11 @@ router.post("/orders", async (req, res) => {
     });
     let price = req.body.price;
     const options = {
-      amount: price*100,
+      amount: price * 100,
       currency: "INR",
       receipt: crypto.randomBytes(8).toString("hex"),
     };
-    
+
     const order = await instance.orders.create(options);
 
     if (!order) return res.status(500).send("Some error occured");
@@ -35,7 +35,7 @@ router.post("/orders", async (req, res) => {
 });
 
 router.post("/success", async (req, res) => {
-    console.log("backend verification");
+  console.log("backend verification");
   try {
     const {
       orderCreationId,
@@ -43,7 +43,7 @@ router.post("/success", async (req, res) => {
       razorpayOrderId,
       razorpaySignature,
       courseId,
-      email
+      email,
     } = req.body.data;
     // console.log(req.body);
     // console.log("orderCreationId: ",orderCreationId);
@@ -77,7 +77,7 @@ router.post("/success", async (req, res) => {
     // console.log(transaction)
     await transaction.save();
     // console.log("txn saved");
-    const user = await User.findOne({email});
+    const user = await User.findOne({ email });
     // console.log(user.transactions);
     user.transactions.push(transaction._id);
     user.save();
@@ -87,11 +87,15 @@ router.post("/success", async (req, res) => {
       msg: "success",
       orderId: razorpayOrderId,
       paymentId: razorpayPaymentId,
-      courseId: courseId
+      courseId: courseId,
     });
   } catch (error) {
     res.status(500).send(error);
   }
 });
 
+router.post("/web3", async (req, res) => {
+  txn_hash = req.body.hash;
+  const user = await User.findOne({ email });
+});
 module.exports = router;
