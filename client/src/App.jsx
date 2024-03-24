@@ -36,7 +36,10 @@ const YourVideo = lazy(() =>
 import { Helmet } from "react-helmet";
 import Loading from "../src/assets/logo/loading.gif";
 import AllUser from "./component/manageUser/AllUser.jsx";
-
+import TnC from "./component/sideLayout/TnC";
+import ContactUs from "./component/sideLayout/ContactUs";
+import PrivacyPolicy from "./component/sideLayout/PrivacyPolicy";
+import CancellationRefundPolicy from "./component/sideLayout/RefundPolicy";
 const USER_TYPE = {
   PUBLIC: "Public User",
   USER: "User",
@@ -107,10 +110,42 @@ function AppRoutes() {
           }
         />
         <Route
+          path="/privacy-policy"
+          element={
+            <PublicElement>
+              <PrivacyPolicy />
+            </PublicElement>
+          }
+        />
+        <Route 
+          path="/tnc"
+          element={
+            <PublicElement>
+              <TnC />
+            </PublicElement>
+          }
+        />
+        <Route 
+          path="/contact-us"
+          element={
+            <PublicElement>
+              <ContactUs />
+            </PublicElement>
+          }
+        />
+        <Route
           path="/forgot-password"
           element={
             <PublicElement>
               <Forgot_Password />
+            </PublicElement>
+          }
+        />
+        <Route 
+          path="/cancellation-refund-policy"
+          element={
+            <PublicElement>
+              <CancellationRefundPolicy />
             </PublicElement>
           }
         />

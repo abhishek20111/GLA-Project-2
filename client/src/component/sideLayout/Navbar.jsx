@@ -22,19 +22,20 @@ function Navbar() {
   const isLogin = useSelector((state) => state.userData.isLogin);
   const detail = useSelector((state) => state.userData);
 
-  useEffect(() =>{
-    setUserInfo(detail)
+  useEffect(() => {
+    setUserInfo(detail);
   });
   const CURRENT_USER_TYPE = useSelector((state) => state.userData.role);
   // console.log(CURRENT_USER_TYPE);
   return (
-    <nav className={`${path == "/" || path == "home" ? "bg-cyan-950" : "bg-amber-950"} from-cyan-950 via-cyan-950 px-2 sm:px-4 py-2.5`}>
+    <nav
+      className={`${
+        path == "/" || path == "home" ? "bg-cyan-950" : "bg-amber-950"
+      } from-cyan-950 via-cyan-950 px-2 sm:px-4 py-2.5`}
+    >
       <div className="container flex flex-wrap items-center justify-between mx-auto">
         <a link to="/" className="flex items-center">
-          <img
-            src={GIF}
-            className="md:w-[100px] ml-3 w-28"
-          />
+          <img src={GIF} className="md:w-[100px] ml-3 w-28" />
         </a>
 
         <div className="flex items-center md:order-2 ">
@@ -76,17 +77,19 @@ function Navbar() {
                       Dashboard
                     </Link>
                   </li>
-                 
+                  <div className="m-1">
+                    <w3m-button size="sm" balance="hide"/>
+                  </div>
                   <li>
-                      <div
-                        onClick={() => {
-                          navigate("/logout");
-                        }}
-                        className="block cursor-pointer px-4 py-2 text-sm  hover:rounded hover:border-2 hover:border-red-500 transition-all hover:font-bold text-red-600"
-                      >
-                        Sign out
-                      </div>
-                    </li>
+                    <div
+                      onClick={() => {
+                        navigate("/logout");
+                      }}
+                      className="block cursor-pointer px-4 py-2 text-sm  hover:rounded hover:border-2 hover:border-red-500 transition-all hover:font-bold text-red-600"
+                    >
+                      Sign out
+                    </div>
+                  </li>
                 </ul>
               </div>
             ) : (
@@ -148,7 +151,9 @@ function Navbar() {
               <a
                 href="#"
                 className={`block py-2 pl-3 pr-4  rounded md:bg-transparent ${
-                  location.pathname === "/courses" ? "text-yellow-300" : "text-white"
+                  location.pathname === "/courses"
+                    ? "text-yellow-300"
+                    : "text-white"
                 } md:p-0 hover:text-yellow-300`}
               >
                 <Link to="/courses">Courses</Link>
@@ -159,7 +164,9 @@ function Navbar() {
                 <Link
                   to="/myCourse"
                   className={`block py-2 pl-3 pr-4  rounded md:bg-transparent ${
-                    location.pathname === "/myCourse" ? "text-yellow-300" : "text-white"
+                    location.pathname === "/myCourse"
+                      ? "text-yellow-300"
+                      : "text-white"
                   } md:p-0 hover:text-yellow-300`}
                 >
                   My Courses
@@ -172,7 +179,9 @@ function Navbar() {
                 <Link
                   to="/manage"
                   className={`block py-2 pl-3 pr-4  rounded md:bg-transparent ${
-                    location.pathname === "/manage" ? "text-yellow-300" : "text-white"
+                    location.pathname === "/manage"
+                      ? "text-yellow-300"
+                      : "text-white"
                   } md:p-0  hover:text-yellow-300`}
                 >
                   Manage
@@ -183,7 +192,9 @@ function Navbar() {
                 <Link
                   to="/intern"
                   className={`block py-2 pl-3 pr-4  rounded md:bg-transparent ${
-                    location.pathname === "/intern" ? "text-yellow-300" : "text-white"
+                    location.pathname === "/intern"
+                      ? "text-yellow-300"
+                      : "text-white"
                   } md:p-0  hover:text-yellow-300`}
                 >
                   Internships
@@ -195,10 +206,12 @@ function Navbar() {
                 <Link
                   to="/userMange"
                   className={`block py-2 pl-3 pr-4  rounded md:bg-transparent ${
-                    location.pathname === "/userMange" ? "text-yellow-300" : "text-white"
+                    location.pathname === "/userMange"
+                      ? "text-yellow-300"
+                      : "text-white"
                   } md:p-0  hover:text-yellow-300`}
                 >
-                  User 
+                  User
                 </Link>
               </li>
             )}
@@ -206,7 +219,9 @@ function Navbar() {
               <Link
                 to="/about"
                 className={`block py-2 pl-3 pr-4  rounded md:bg-transparent ${
-                  location.pathname === "/about" ? "text-yellow-300" : "text-white"
+                  location.pathname === "/about"
+                    ? "text-yellow-300"
+                    : "text-white"
                 } md:p-0  hover:text-yellow-300`}
               >
                 About Us

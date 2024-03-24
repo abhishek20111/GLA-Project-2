@@ -1,6 +1,11 @@
 import React from "react";
 import { Fade } from "react-awesome-reveal";
 import { Helmet } from "react-helmet";
+import ContactUs from "./ContactUs";
+import CancellationRefundPolicy from "./RefundPolicy";
+import PrivacyPolicy from "./PrivacyPolicy";
+import TnC from "./TnC";
+import { Link } from "react-router-dom";
 export default function About() {
   return (
     <Fade>
@@ -138,6 +143,24 @@ export default function About() {
           </div>
         </div>
       </section>
+      <nav className="bg-gray-800 text-white py-4">
+      <div className="container mx-auto px-4">
+        <ul className="flex justify-around items-center">
+          <li>
+            <Link to="/tnc" className="hover:text-gray-300">Terms and Conditions</Link>
+          </li>
+          <li>
+            <Link to="/privacy-policy" className="hover:text-gray-300">Privacy Policy</Link>
+          </li>
+          <li>
+            <Link to="/contact-us" className="hover:text-gray-300">Contact Us</Link>
+          </li>
+          <li>
+            <Link to="/cancellation-refund-policy" className="hover:text-gray-300">Cancellation & Refund Policy</Link>
+          </li>
+        </ul>
+      </div>
+    </nav>
     </Fade>
   );
 }

@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import VideoWindow from "../MangeVideo/VideoWindow";
 import { useState } from "react";
+import { useSendTransaction, useWaitForTransactionReceipt } from "wagmi";
+import { useAccount } from "wagmi";
+import { parseEther } from "viem";
 import { redirect, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
@@ -9,6 +12,7 @@ import { useSelector } from "react-redux";
 import { Zoom } from "react-awesome-reveal";
 import { Helmet } from "react-helmet";
 import bg from "../../assets/bg4.svg";
+import "./modal.css";
 import Rating from "./Rating";
 import Review from "../MangeVideo/Review";
 function CourseDesc() {
@@ -22,6 +26,52 @@ function CourseDesc() {
   const userInfo = useSelector((state) => state.userData);
   const userId = useSelector((state) => state.userData._id);
   const token = localStorage.getItem("token");
+  const { address, isConnecting, isDisconnected } = useAccount();
+  const { data: hash, isPending, sendTransaction } = useSendTransaction();
+  const [showModal, setShowModal] = useState(false);
+
+  const { isLoading: isConfirming, isSuccess: isConfirmed } =
+    useWaitForTransactionReceipt({
+      hash,
+    });
+  useEffect(() => {
+    console.log(hash);
+    if (isConfirmed) {
+      setShowModal(true);
+      // Send the hash to the backend after transaction is confirmed
+      sendHashToBackend(hash);
+    }
+  }, [isConfirmed, hash]);
+  async function sendHashToBackend(hash) {
+    try {
+      // const response = await axios.post(
+      //   "http://localhost:8080/payment/web3",
+      //   { hash },
+      //   { headers: { Authorization: `Bearer ${token}` } }
+      // );
+      // console.log(response.data);
+      console.log(hash);
+    } catch (error) {
+      console.error("Error sending hash to backend:", error);
+    }
+  }
+  async function sendTxn(price) {
+    const to = "0xb8a4A831FFaE9D7B03d7B279eE2061BbD2aCF491";
+    const value = "0.001";
+    sendTransaction({ to, value: parseEther(value) });
+    while (!isConfirmed) {
+      await new Promise((resolve) => setTimeout(resolve, 1000)); // Check every second
+    }
+
+    // Transaction is confirmed, now send the hash to the backend
+    const response = await axios.post(
+      "http://localhost:8080/payment/web3",
+      { hash },
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+  }
   if (!course) {
     // Redirect to '/signin' if course data is not available
     return navigate("/signin");
@@ -211,31 +261,70 @@ function CourseDesc() {
                       </button>
                     </div>
                   ) : (
-                    <button
-                      href="#_"
-                      class="inline-flex overflow-hidden text-white bg-gray-900 rounded group"
-                      onClick={(e) => {
-                        displayRazorpay(course._id, course.title, course.price);
-                      }}
-                    >
-                      <span class="px-3.5 py-2 text-white bg-cyan-500 group-hover:bg-yellow-300 group-hover:text-amber-950 flex items-center justify-center">
-                        <svg
-                          class="w-5 h-5"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                          xmlns="http://www.w3.org/2000/svg"
+                    <div className="flex flex-row-reverse">
+                      {isConnecting || isDisconnected ? (
+                        <div className="flex justify-center flex-col m-1">
+                          <w3m-button size="md" balance="hide" />
+                        </div>
+                      ) : (
+                        <button
+                          href="#_"
+                          class="inline-flex overflow-hidden text-white bg-gray-900 rounded group"
+                          disabled={isPending}
+                          onClick={() => {
+                            console.log("clicked");
+                            sendTxn(course.price);
+                          }}
                         >
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
-                          ></path>
-                        </svg>
-                      </span>
-                      <span class="pl-7 pr-9 py-2.5">₹{course.price}</span>
-                    </button>
+                          <span class="px-3.5 py-2 text-white bg-violet-300 group-hover:bg-pink-300 group-hover:text-amber-950 flex items-center justify-center">
+                            <div
+                              title="Ethereum Foundation, CC BY 3.0 &lt;https://creativecommons.org/licenses/by/3.0&gt;, via Wikimedia Commons"
+                              href="https://commons.wikimedia.org/wiki/File:Ethereum_logo_2014.svg"
+                            >
+                              <img
+                                width="16"
+                                alt="Ethereum logo 2014"
+                                src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Ethereum_logo_2014.svg/256px-Ethereum_logo_2014.svg.png"
+                              />
+                            </div>
+                          </span>
+                          <span class="pl-4 pr-6 py-2.5">
+                            {isPending
+                              ? "Confirming..."
+                              : course.price + " ETH"}
+                          </span>
+                        </button>
+                      )}
+                      <button
+                        href="#_"
+                        class="inline-flex overflow-hidden text-white bg-gray-900 rounded group"
+                        onClick={(e) => {
+                          displayRazorpay(
+                            course._id,
+                            course.title,
+                            course.price
+                          );
+                        }}
+                      >
+                        <span class="px-3.5 py-2 text-white bg-cyan-500 group-hover:bg-yellow-300 group-hover:text-amber-950 flex items-center justify-center">
+                          <svg
+                            class="w-5 h-5"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
+                            ></path>
+                          </svg>
+                        </span>
+                        <span class="pl-7 pr-9 py-2.5">₹{course.price}</span>
+                      </button>
+                    </div>
                   )}
                 </div>
               </div>
@@ -289,8 +378,52 @@ function CourseDesc() {
 
 
       </div>
+      {showModal && (
+        <PopupModal
+          hash={hash}
+          setShowModal={setShowModal}
+          courseId={course._id}
+          handleAddCourse={handleAddCourse}
+        />
+      )}
     </div>
   );
 }
 
 export default CourseDesc;
+
+const PopupModal = ({ hash, setShowModal, courseId, handleAddCourse }) => {
+  const handleCopyToClipboard = () => {
+    // Create a temporary textarea element to copy the hash
+    const textarea = document.createElement("textarea");
+    textarea.value = hash;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand("copy");
+    document.body.removeChild(textarea);
+
+    // Show a toast message indicating successful copy
+    toast.success("Transaction hash copied to clipboard!");
+  };
+
+  const handleCloseModal = () => {
+    // Call handleAddCourse before closing the modal
+    setShowModal(false);
+    handleAddCourse(courseId);
+  };
+
+  return (
+    <div className="modal">
+      <div className="modal-content">
+        <span className="close" onClick={handleCloseModal}>
+          &times;
+        </span>
+        <h2>Transaction Hash:</h2>
+        <p>{hash}</p>
+        <button onClick={handleCopyToClipboard} className="copy-button">
+          Copy to Clipboard
+        </button>
+      </div>
+    </div>
+  );
+};
