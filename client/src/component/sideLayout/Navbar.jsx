@@ -80,6 +80,14 @@ function Navbar() {
                   <div className="m-1">
                     <w3m-button size="sm" balance="hide"/>
                   </div>
+                  <li className="px-2">
+                    <Link
+                      to="/message"
+                      className="block px-2 py-2 text-sm text-gray-700 hover:bg-gray-100 "
+                    >
+                      Message
+                    </Link>
+                  </li>
                   <li>
                     <div
                       onClick={() => {

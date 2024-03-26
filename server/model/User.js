@@ -9,7 +9,10 @@ const sample = new mongoose.Schema({
     password: String,
     profileImage:String,
     role:{type: String, default:"USER"},
-    courceId:[String],
+    courceId:[{
+        type: ObjectId,
+        ref: "Course"
+    }],
     verified:{
         type: Boolean,
         default: false
@@ -17,7 +20,12 @@ const sample = new mongoose.Schema({
     transactions: [{
         type: ObjectId,
         ref: "Transactions"
+    }],
+    conversationId: [{
+        type: ObjectId,
+        ref: "Conversation"
     }],   
 },{timestamps: true});
+
 module.exports = mongoose.model("USER", sample);
 

@@ -40,6 +40,7 @@ import TnC from "./component/sideLayout/TnC";
 import ContactUs from "./component/sideLayout/ContactUs";
 import PrivacyPolicy from "./component/sideLayout/PrivacyPolicy";
 import CancellationRefundPolicy from "./component/sideLayout/RefundPolicy";
+import AllMessage from "./component/MangeVideo/message/AllMessage.jsx";
 const USER_TYPE = {
   PUBLIC: "Public User",
   USER: "User",
@@ -131,6 +132,14 @@ function AppRoutes() {
             <PublicElement>
               <ContactUs />
             </PublicElement>
+          }
+        />
+        <Route 
+          path="/message"
+          element={
+            <UserElement>
+              <AllMessage />
+            </UserElement>
           }
         />
         <Route
