@@ -37,40 +37,50 @@ function CourseDesc() {
   useEffect(() => {
     console.log(hash);
     if (isConfirmed) {
-      setShowModal(true);
       // Send the hash to the backend after transaction is confirmed
-      sendHashToBackend(hash);
+      sendHashToBackend(hash, course._id);
     }
   }, [isConfirmed, hash]);
-  async function sendHashToBackend(hash) {
+  async function sendHashToBackend(hash, courseId) {
     try {
-      // const response = await axios.post(
-      //   "http://localhost:8080/payment/web3",
-      //   { hash },
-      //   { headers: { Authorization: `Bearer ${token}` } }
-      // );
-      // console.log(response.data);
+      const data = {
+        hash,
+        courseId,
+        email: userInfo.email,
+      };
+      console.log(data);
+      console.log("sending to backend");
+      const response = await axios.post(
+        "http://localhost:8080/payment/web3",
+        { data },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      if (!response) {
+        alert("Server error. Are you online?");
+        return;
+      }
+      console.log(response);
+      setShowModal(true);
       console.log(hash);
     } catch (error) {
       console.error("Error sending hash to backend:", error);
     }
   }
-  async function sendTxn(price) {
+  async function sendTxn(price, courseId) {
     const to = "0xb8a4A831FFaE9D7B03d7B279eE2061BbD2aCF491";
     const value = "0.001";
     sendTransaction({ to, value: parseEther(value) });
     while (!isConfirmed) {
       await new Promise((resolve) => setTimeout(resolve, 1000)); // Check every second
     }
-
     // Transaction is confirmed, now send the hash to the backend
-    const response = await axios.post(
-      "http://localhost:8080/payment/web3",
-      { hash },
-      {
-        headers: { Authorization: `Bearer ${token}` },
-      }
-    );
+    // const response = await axios.post(
+    //   "http://localhost:8080/payment/web3",
+    //   { hash },
+    //   {
+    //     headers: { Authorization: `Bearer ${token}` },
+    //   }
+    // );
   }
   if (!course) {
     // Redirect to '/signin' if course data is not available
@@ -273,7 +283,7 @@ function CourseDesc() {
                           disabled={isPending}
                           onClick={() => {
                             console.log("clicked");
-                            sendTxn(course.price);
+                            sendTxn(course.price, course._id);
                           }}
                         >
                           <span class="px-3.5 py-2 text-white bg-violet-300 group-hover:bg-pink-300 group-hover:text-amber-950 flex items-center justify-center">
@@ -372,11 +382,9 @@ function CourseDesc() {
         </div>
         <div className="w-[100vw] p-4 bg-gray-300 flex  flex-col">
           {console.log(course)}
-          <Rating review = {course.review}/>
-          <Review courseDetails={course} userId={userId}  />
+          <Rating review={course.review} />
+          <Review courseDetails={course} userId={userId} />
         </div>
-
-
       </div>
       {showModal && (
         <PopupModal

@@ -70,6 +70,8 @@ router.post("/success", async (req, res) => {
     console.log("transaction legit");
     const transaction = new Transactions({
       orderId: razorpayOrderId,
+      isCrypto: false,
+      hash: "",
       paymentId: razorpayPaymentId,
       email: email,
       course: courseId,
@@ -96,7 +98,31 @@ router.post("/success", async (req, res) => {
 });
 
 router.post("/web3", async (req, res) => {
-  txn_hash = req.body.hash;
+  console.log("entering WEb3");
+  const { hash, courseId, email } = req.body.data;
+  console.log(hash, courseId);
   const user = await User.findOne({ email });
+  console.log("user found");
+  console.log(user._id);
+  const transaction = new Transactions({
+    isCrypto: true,
+    orderId: crypto.randomBytes(8).toString("hex"),
+    email: email,
+    course: courseId,
+    hash: hash,
+    paymentId: "",
+  });
+  console.log(transaction);
+  try {
+    await transaction.save();
+    console.log("txn saved");
+    user.transactions.push(transaction._id);
+    console.log("txn pushed to user");
+    user.save();
+    res.json({msg: "success"});
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  }
 });
 module.exports = router;
