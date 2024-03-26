@@ -74,15 +74,15 @@ router.post("/success", async (req, res) => {
       email: email,
       course: courseId,
     });
-    // console.log(transaction)
+    console.log(transaction)
     await transaction.save();
-    // console.log("txn saved");
+    console.log("txn saved");
     const user = await User.findOne({ email });
-    // console.log(user.transactions);
+    console.log(user.transactions);
     user.transactions.push(transaction._id);
     user.save();
-    // console.log(user.transactions);
-    // console.log("data saved");
+    console.log(user.transactions);
+    console.log("data saved");
     res.json({
       msg: "success",
       orderId: razorpayOrderId,
@@ -90,6 +90,7 @@ router.post("/success", async (req, res) => {
       courseId: courseId,
     });
   } catch (error) {
+    console.log(error);
     res.status(500).send(error);
   }
 });

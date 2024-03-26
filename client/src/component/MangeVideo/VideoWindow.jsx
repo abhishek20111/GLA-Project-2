@@ -2,6 +2,8 @@ import { useRef, useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import Review from "./Review";
 import { useSelector } from "react-redux";
+import Message from "./Message";
+import axios from "axios";
 
 const VideoPlayer = ({ videoUrl, isPlaying }) => {
   const videoRef = useRef(null);
@@ -58,19 +60,54 @@ const Accordion = ({ syllabus, videoUrl, onAccordionClick }) => {
 const VideoWindow = ({ selectedSyllabus, selectedVideoUrl, courceData }) => {
   const location = useLocation();
   const userId = useSelector((state) => state.userData._id);
+  const userEmail = useSelector((state) => state.userData.email);
 
   const [selectIndex, setSelectIndex] = useState(-1);
   const syllabus = selectedSyllabus || location.state && location.state.selectedSyllabus;
   const videoUrl = selectedVideoUrl || location.state && location.state.selectedVideoUrl;
   const courceDetails = courceData || location.state && location.state.courceData;
-  console.log(courceDetails);
+
   const [selectedVideo, setSelectedVideo] = useState("");
   const [isVideoPlaying, setVideoPlaying] = useState(false);
+  const [converstation, setConverstation] = useState("");
+  const [messages, setMessages] = useState([]);
+  
+  const getConverstation = async (courceDetails) => {
+    const data = {
+      senderId: userEmail,
+      receiverId: courceDetails.createBy,
+    };
+    try {
+      let response = await axios.post("http://localhost:8080/chat/conversation/add", data);
+      console.log(response.data.user._id);
+      setConverstation(response.data.user._id);
+    } catch (error) {
+      console.log("Error while calling getConversation API ", error);
+    }
+  };
 
+  const getOldMessage = async (id) => {
+    try {
+      const backData = await axios.get(`http://localhost:8080/chat/message/get/${id}`);
+      console.log(backData.data);
+      if(backData.data.length > 0)
+      setMessages(backData.data);
+    } catch (error) { 
+      console.log('Error while calling newConversations API ', error);
+    }
+  };
+  
   const handleAccordionClick = (videoUrl) => {
     setSelectedVideo(videoUrl);
     setVideoPlaying(true);
   };
+  useEffect(() => {
+    if (courceDetails) getConverstation(courceDetails);
+    if (courceDetails && converstation) {
+      getOldMessage(converstation);
+    }
+  }, [courceDetails, converstation]);
+  
   return (
     <div className="flex flex-col">
 
@@ -87,10 +124,9 @@ const VideoWindow = ({ selectedSyllabus, selectedVideoUrl, courceData }) => {
       </div>
       <div className="md:w-1/2">
         <div className="p-6 md:my-10 max-h-[300px] overflow-auto">
-          {videoUrl.map((videoUrl, index) => (<div onClick={()=>setSelectIndex(syllabus[index])}>
+          {videoUrl.map((videoUrl, index) => 
+          (<div key={index} onClick={()=>setSelectIndex(syllabus[index])}>
             <Accordion
-              
-              key={index}
               syllabus={syllabus[index]}
               videoUrl={videoUrl}
               onAccordionClick={handleAccordionClick}
@@ -100,6 +136,17 @@ const VideoWindow = ({ selectedSyllabus, selectedVideoUrl, courceData }) => {
         </div>
       </div>
     </div>
+
+          <div className="">
+            <Message 
+            courceDetails={courceDetails} 
+            converstationId={converstation}
+            setMessages={setMessages}
+            messages={messages}
+            getOldMessage={getOldMessage}
+            />
+          </div>
+
       <div>
         {userId && courceDetails && <Review userId={userId} courseDetails={courceDetails}/>}
       </div>

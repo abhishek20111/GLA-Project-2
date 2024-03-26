@@ -5,7 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Star from "../../assets/logo/star.png";
 
 function Review({ courseDetails, userId }) {
-  console.log(courseDetails, userId);
+  // console.log(courseDetails, userId);
   const notify1 = (info) => toast.success(info);
   const courseId = courseDetails && courseDetails._id;
 
@@ -130,47 +130,49 @@ function Review({ courseDetails, userId }) {
           <h1 className="underline m-auto justify-center flex w-full text-xl text-gray-300 font-bold mt-11">
             Some Reviews
           </h1>
-          <div className="flex flex-wrap gap-7  mt-12">
-            {courseDetails &&
-              courseDetails.review.map((review, index) => {
-                if (review.createBy._id !== userId) {
-                  return (
-                    <div
-                      key={index}
-                      className="ring-2 p-4  sm:w-[20%]  flex flex-col gap-y-3 "
-                    >
-                      <div className="flex gap-x-5 items-center">
-                        <img
-                          src={
-                            review.createBy.profileImage ||
-                            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlPViCqVyGRxdQtmHT-5rBlQoa1XJsMwkOdQ3A-hEWfkYMRLG-S-LRYCLcGteHqbSF4Kk&usqp=CAU"
-                          }
-                          className=" h-12 w-12 rounded-full"
-                          alt="Profile"
-                        />
-                        <span className="text-xl font-semibold text-gray-800">
-                          {review.createBy.name}
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-x-2">
-                        {[...Array(review.star)].map((_, index) => (
-                          <img
-                            src={Star}
-                            className="h-5"
-                            alt="Start"
-                            srcset=""
-                          />
-                        ))}
-                      </div>
-                      <p className="text-gray-800 text-lg font-semibold">
-                        {review.comment}
-                      </p>
-                    </div>
-                  );
+          <div className="flex flex-wrap gap-7 mt-12">
+  {courseDetails && courseDetails.review &&
+    courseDetails.review.map((review, index) => {
+      if (review.createBy && review.createBy._id !== userId) { 
+        return (
+          <div
+            key={index}
+            className="ring-2 p-4 sm:w-[20%] flex flex-col gap-y-3 "
+          >
+            <div className="flex gap-x-5 items-center">
+              <img
+                src={
+                  review.createBy.profileImage ||
+                  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlPViCqVyGRxdQtmHT-5rBlQoa1XJsMwkOdQ3A-hEWfkYMRLG-S-LRYCLcGteHqbSF4Kk&usqp=CAU"
                 }
-                return null;
-              })}
+                className="h-12 w-12 rounded-full"
+                alt="Profile"
+              />
+              <span className="text-xl font-semibold text-gray-800">
+                {review.createBy.name}
+              </span>
+            </div>
+            <div className="flex items-center gap-x-2">
+              {[...Array(review.star)].map((_, index) => (
+                <img
+                  key={index} // Add a unique key for each iteration
+                  src={Star}
+                  className="h-5"
+                  alt="Start"
+                  srcSet=""
+                />
+              ))}
+            </div>
+            <p className="text-gray-800 text-lg font-semibold">
+              {review.comment}
+            </p>
           </div>
+        );
+      }
+      return null;
+    })}
+</div>
+
         </div>
       </div>
     </div>
