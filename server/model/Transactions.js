@@ -6,9 +6,17 @@ const transactions = new mongoose.Schema(
       type: String,
       required: true,
     },
+    isCrypto: {
+      type: Boolean,
+      required: true,
+    },
+    hash: {
+      type: String,
+      default: "",
+    },
     paymentId: {
       type: String,
-      required: true,
+      default: "",
     },
     email: {
       type: String,
