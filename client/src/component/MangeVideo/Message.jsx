@@ -70,7 +70,7 @@ function Message({
                   <Chatting
                     key={mes._id}
                     msg={mes}
-                    own={mes.senderId === userId}
+                    own={mes.senderId[0] === userId}
                   />
                 </>
               ))

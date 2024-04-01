@@ -72,7 +72,7 @@ function AllMessage() {
 
   const Chatting = ({ msg, own }) => {
     return (
-      <div ref={scroller} className={`w-full flex flex-wrap`}>
+      <div  className={`w-full flex flex-wrap`}>
         <div
           className={`${
             !own ? "bg-gray-300" : "ml-auto bg-blue-200"
@@ -183,14 +183,18 @@ function AllMessage() {
           <div className="w-full h-full">
             {message?.length > 0 && (
               <>
-                <div  className="ml-5 gap-y-3 h-[73dvh] overflow-auto flex flex-col ">
+                <div   className="ml-5 gap-y-3 h-[73dvh] overflow-auto flex flex-col ">
                   {message?.length > 0 ? (
                     message.map((mes, idx) => (
+                      <div 
+                      ref={scroller}  key={idx}>
+
                       <Chatting
-                        key={idx}
-                        msg={mes}
-                        own={mes.senderId[0] === userId}
+                     
+                      msg={mes}
+                      own={mes.senderId[0] === userId}
                       />
+                      </div>
                     ))
                   ) : (
                     <h1 className="text-xl font-semibold m-auto">

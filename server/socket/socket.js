@@ -25,7 +25,7 @@ const getUser = (userId) => {
 
 const sendMessageToUser = async ({ senderId, receiverId, text }) => {
     const SocketIdUser = getUser(receiverId);
-    console.log("User - " + SocketIdUser);
+    // console.log("User - " + SocketIdUser);
     if (SocketIdUser) {
         console.log("data ",text, senderId, receiverId, SocketIdUser);
         io.to(SocketIdUser).emit("getMessage", {
