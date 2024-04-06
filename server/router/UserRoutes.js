@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken')
 const sendEmail  = require('../mailer/mail')
 const middleware = require('../middleware/middleware')
 const authenticateToken = require('../middleware/middleware')
-
+const Transaction = mongoose.model('Transactions')
 
 
 router.post("/register", async (req, res) => {
@@ -177,6 +177,18 @@ router.post('/deletUser', authenticateToken, async (req, res) => {
         const users = await User.findByIdAndDelete(req.body.id)
         console.log(users);
         return res.status(200).json({meassage: "User Deleted Succesfuuly"});
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({ error: err });
+    }
+});
+
+router.post("/getTxns", authenticateToken, async (req, res) => {
+    try {
+        console.log("getTxns");
+        const user = req.user.email;
+        const transactions = await Transaction.find({ email: user });
+        return res.status(200).json(transactions);
     } catch (err) {
         console.log(err);
         return res.status(500).json({ error: err });

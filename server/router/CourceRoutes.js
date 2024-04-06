@@ -213,9 +213,4 @@ router.post('/setReview/:courseId', middleware, async (req, res) => {
     }
   });
 
-
-   
-  
-
-
 module.exports = router; 
