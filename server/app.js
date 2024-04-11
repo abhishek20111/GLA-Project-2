@@ -14,7 +14,7 @@ const path = require('path')
 const bodyParser = require("body-parser");
 const setupSocket = require('./socket/socket.js');
 
-
+ 
 dotenv.config()
  
 const app = express();//to create an instance of the Express application object.
@@ -27,10 +27,10 @@ const port = process.env.PORT || 8080;
 app.use(cors({ credentials: true }));
 
   
-mongoose.connect(`mongodb://localhost:27017/miniProject2`) 
-// mongoose.connect(`mongodb+srv://miniproject:${process.env.DB_PASSWORD}@cluster0.azdxdnh.mongodb.net/?retryWrites=true&w=majority`, { 
-//    dbName:"miniProject2"
-// })
+// mongoose.connect(`mongodb://localhost:27017/miniProject2`) 
+mongoose.connect(`mongodb+srv://miniproject:${process.env.DB_PASSWORD}@cluster0.azdxdnh.mongodb.net/?retryWrites=true&w=majority`, { 
+   dbName:"miniProject2"
+})
     .then(() => {
         console.log("Successfully connect to MongoDB");
     })
@@ -51,5 +51,5 @@ app.get("*", (req, res) => {
 
 const server = app.listen(port, () => {
     console.log(`Server is running on port - ${port}`);
-}) 
-setupSocket(server);
+})   
+setupSocket(server); 
