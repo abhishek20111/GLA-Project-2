@@ -68,7 +68,7 @@ function CourseDesc() {
   }
   async function sendTxn(price, courseId) {
     const to = "0xb8a4A831FFaE9D7B03d7B279eE2061BbD2aCF491";
-    const value = "0.001";
+    const value = "0.0001";
     sendTransaction({ to, value: parseEther(value) });
     while (!isConfirmed) {
       await new Promise((resolve) => setTimeout(resolve, 1000)); // Check every second
